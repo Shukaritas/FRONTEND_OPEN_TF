@@ -1,0 +1,32 @@
+<div class="login-container">
+  <div class="login-left">
+    <div class="login-form-wrapper">
+      <h1 class="login-title">Bienvenido de Nuevo!</h1>
+
+      <form (ngSubmit)="onSignIn()">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Correo Electrónico</mat-label>
+          <input matInput [(ngModel)]="email" name="email" type="email" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Contraseña</mat-label>
+          <input matInput [(ngModel)]="password" name="password" type="password" required />
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit" class="sign-in-button">
+          Sign in
+        </button>
+
+        <p class="signup-text">
+          ¿No tienes una cuenta?
+          <a routerLink="register" class="signup-link">Regístrate</a>
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <div class="login-right">
+    <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=2532&q=80" alt="Farm background" class="background-image" />
+  </div>
+</div>

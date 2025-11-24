@@ -1,0 +1,37 @@
+<div class="page-container">
+  <header class="page-header">
+    <button class="back-button" routerLink="/dashboard">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div class="header-text">
+      <h1>{{'FIELDS.title' | translate}}</h1>
+      <p>{{'FIELDS.description' | translate}}</p>
+    </div>
+  </header>
+
+  <main class="fields-grid">
+    <a *ngFor="let field of fields$ | async" [routerLink]="['/my-fields', field.id]" class="field-card-link">
+      <div class="field-card">
+        <div class="card-image" [style.backgroundImage]="'url(' + field.image_url + ')'">
+          <div class="status-chip" [ngClass]="field.status.toLowerCase()">
+            <span class="status-dot"></span>
+            {{ field.status }}
+          </div>
+        </div>
+        <div class="card-content">
+          <h3 class="field-title">{{ field.title }}</h3>
+          <p class="field-subtitle">{{ field.cropName }} - {{ field.days }} Days</p>
+        </div>
+      </div>
+    </a>
+
+    <a routerLink="/my-fields/add" class="add-card-link">
+      <div class="add-card-container">
+        <button class="add-button">
+          <mat-icon>+</mat-icon>
+        </button>
+      </div>
+    </a>
+  </main>
+
+</div>

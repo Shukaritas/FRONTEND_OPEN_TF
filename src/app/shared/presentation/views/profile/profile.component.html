@@ -1,0 +1,66 @@
+<div class="profile-container" *ngIf="user">
+  <header class="page-header">
+    <button class="back-button" routerLink="/dashboard">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h1>{{'PROFILE.title' | translate}}</h1>
+  </header>
+
+  <main class="profile-content">
+    <section class="form-section">
+      <h2>{{'PROFILE.PERSONAL_INFO.TITLE' | translate}}</h2>
+      <div class="form-field">
+        <input type="text" [(ngModel)]="user.user_name" name="userName" [placeholder]="'PROFILE.PERSONAL_INFO.NAME_PLACEHOLDER' | translate">
+      </div>
+      <div class="form-field">
+        <input type="email" [(ngModel)]="user.email" name="email" [placeholder]="'PROFILE.PERSONAL_INFO.EMAIL_PLACEHOLDER' | translate">
+      </div>
+      <div class="form-field">
+        <input type="text" [(ngModel)]="user.phone_number" name="phoneNumber" [placeholder]="'PROFILE.PERSONAL_INFO.PHONE_PLACEHOLDER' | translate">
+      </div>
+      <div class="form-field">
+        <input type="text" [(ngModel)]="user.identificator" name="identificator" [placeholder]="'PROFILE.PERSONAL_INFO.ID_PLACEHOLDER' | translate">
+      </div>
+
+      <div class="form-actions right">
+        <button class="save-btn" (click)="onSavePersonalInfo()">{{'PROFILE.PASSWORD.SAVE_BUTTON' | translate}}</button>
+      </div>
+
+      <div class="toggle-field">
+        <label>{{'PROFILE.PERSONAL_INFO.NOTIFICATIONS' | translate}}</label>
+        <mat-slide-toggle color="primary"></mat-slide-toggle>
+      </div>
+      <div class="toggle-field">
+        <label>{{'PROFILE.PERSONAL_INFO.LOCATION' | translate}}</label>
+        <mat-slide-toggle color="primary"></mat-slide-toggle>
+      </div>
+    </section>
+
+    <section class="form-section">
+      <h2>{{'PROFILE.PASSWORD.TITLE' | translate}}</h2>
+      <div class="form-field">
+        <input type="password" [(ngModel)]="currentPassword" name="currentPassword" [placeholder]="'PROFILE.PASSWORD.CURRENT_PLACEHOLDER' | translate">
+      </div>
+      <div class="form-field">
+        <input type="password" [(ngModel)]="newPassword" name="newPassword" [placeholder]="'PROFILE.PASSWORD.NEW_PLACEHOLDER' | translate">
+      </div>
+      <div class="form-field">
+        <input type="password" [(ngModel)]="confirmNewPassword" name="confirmPassword" [placeholder]="'PROFILE.PASSWORD.CONFIRM_PLACEHOLDER' | translate">
+      </div>
+      <div class="form-actions right">
+        <button class="save-btn" (click)="onChangePassword()">{{'PROFILE.PASSWORD.CONFIRM_PLACEHOLDER' | translate}}</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="profile-footer">
+    <button class="secondary-btn" (click)="onLogout()">
+      <mat-icon>logout</mat-icon>
+      <span>{{'PROFILE.FOOTER.LOGOUT' | translate}}</span>
+    </button>
+    <button class="danger-btn" (click)="onDeleteAccount()">
+      <mat-icon>delete_outline</mat-icon>
+      <span>{{'PROFILE.FOOTER.DELETE_ACCOUNT' | translate}}</span>
+    </button>
+  </footer>
+</div>

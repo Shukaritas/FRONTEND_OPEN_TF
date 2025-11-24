@@ -1,0 +1,58 @@
+<mat-card class="crop-form-card">
+  <div class="card-header">
+    <div class="title">
+      <mat-icon>yard</mat-icon>
+      <h3>Add a New Crop</h3>
+    </div>
+    <span class="subtitle">Complete the information and save your crop</span>
+  </div>
+
+  <div class="form-grid">
+    <mat-form-field appearance="outline">
+      <mat-label>Title</mat-label>
+      <input matInput [(ngModel)]="newCrop.title" name="title" required placeholder="e.g., Tomato">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Planting Date</mat-label>
+      <input matInput type="date" [(ngModel)]="newCrop.planting_date" name="planting_date" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Harvest Date</mat-label>
+      <input matInput type="date" [(ngModel)]="newCrop.harvest_date" name="harvest_date" required>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Field</mat-label>
+      <mat-select [(ngModel)]="selectedFieldId" name="selectedFieldId" required>
+        <mat-option *ngFor="let field of fields$ | async" [value]="field.id">
+          {{field.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Status</mat-label>
+      <mat-select [(ngModel)]="newCrop.status" name="status" required>
+        <mat-select-trigger>
+          <span class="chip" [ngClass]="newCrop.status | lowercase">{{ newCrop.status || '—' }}</span>
+        </mat-select-trigger>
+        <mat-option *ngFor="let s of statuses" [value]="s">
+          <span class="chip" [ngClass]="s | lowercase">{{ s }}</span>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="form-actions">
+    <button mat-flat-button class="cancel-btn" (click)="onCancel()">
+      <mat-icon>arrow_back</mat-icon>
+      Cancel
+    </button>
+    <button mat-flat-button class="save-btn" (click)="onSubmit()">
+      <mat-icon>save</mat-icon>
+      Save
+    </button>
+  </div>
+</mat-card>

@@ -1,0 +1,120 @@
+.form-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.page-header {
+  margin-bottom: 2rem;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+h2 {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.banner-image {
+  display: none; /* Ocultamos el banner estático */
+}
+.image-preview-container {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #f0f0f0;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.file-upload-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  padding: 1rem;
+  border-radius: 12px;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.image-preview-container:hover .file-upload-label {
+  opacity: 1;
+}
+
+#file-upload {
+  display: none; /* Ocultamos el input de archivo real */
+}
+
+/* Estilo para el botón de guardar deshabilitado */
+.save-btn:disabled {
+  background-color: #e0e0e0;
+  cursor: not-allowed;
+  color: #a0a0a0;
+}
+.form-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-fields input {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+  font-size: 1rem;
+}
+
+.form-fields input:nth-child(3) {
+  grid-column: 1 / 2;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 3rem;
+}
+
+.form-actions button {
+  padding: 0.8rem 2rem;
+  border-radius: 50px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.save-btn {
+  background-color: #a8bfa8;
+  color: #fff;
+}

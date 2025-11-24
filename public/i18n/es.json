@@ -1,0 +1,164 @@
+{
+  "NAVBAR": {
+    "HOME": "Inicio",
+    "MENU": "Menú"
+  },
+  "SIDEBAR": {
+    "DASHBOARD": "Panel de control",
+    "MY_CROPS": "Mis cultivos",
+    "MY_FIELDS": "Mis campos",
+    "MY_TASKS": "Mis tareas",
+    "COMMUNITY": "Comunidad",
+    "MY_LOCATION": "Mi ubicación",
+    "LOCATION_NAME": "Fundo Santa Rosa"
+  },
+  "LANGUAGE": {
+    "SELECT": "Seleccionar idioma",
+    "ENGLISH": "Inglés",
+    "SPANISH": "Español"
+  },
+  "COMMON": {
+    "WELCOME": "Bienvenido",
+    "LOGOUT": "Cerrar sesión",
+    "PROFILE": "Perfil",
+    "DAYS": "Días",
+    "TODAY": "Hoy",
+    "TOMORROW": "Mañana",
+    "VIEW_ALL": "Ver Todo"
+  },
+  "LOGIN": {
+    "WELCOME_BACK": "¡Bienvenido de Nuevo!",
+    "USERNAME": "Usuario",
+    "PASSWORD": "Contraseña",
+    "SIGN_IN": "Iniciar sesión",
+    "NO_ACCOUNT": "¿No tienes una cuenta?",
+    "SIGN_UP": "Regístrate"
+  },
+  "DASHBOARD": {
+    "WELCOME_BACK": "¡Bienvenido de nuevo!",
+    "MY_CROPS": "Mis cultivos",
+    "UPCOMING_HARVEST_DATE": "Próxima fecha de cosecha",
+    "UPCOMING_TASKS": "Tareas próximas",
+    "LATEST_RECOMMENDATIONS": "Últimas Recomendaciones",
+    "IN_DAYS": "En {{count}} días",
+    "CROPS": {
+      "TITLE": "Mis Cultivos",
+      "DESCRIPTION": "Maneja tus cultivos aquí",
+      "BUTTON": "Nuevo Cultivo",
+      "TOMATO": "Tomate",
+      "LETTUCE": "Lechuga",
+      "CARROT": "Zanahoria",
+      "WHEAT": "Trigo",
+      "CACAO": "Cacao",
+      "COFFEE": "Café",
+      "TABLE": {
+        "CROP": "Cultivo",
+        "PLANTING_DATE": "Fecha de siembra",
+        "HARVEST_DATE": "Fecha de cosecha",
+        "FIELD": "Parcela",
+        "STATUS": "Estado",
+        "ACTIONS": "Acciones"
+      }
+    },
+    "LOCATIONS": {
+      "PARCELA_SAN_JOSE": "Parcela San José",
+      "FUNDO_LOS_PINOS": "Fundo Los Pinos",
+      "FUNDO_SANTA_ROSA": "Fundo Santa Rosa"
+    },
+    "TASKS": {
+      "TITLE": "Mis Tareas",
+      "DESCRIPTION": "Organiza tus tareas aqui",
+      "BUTTON": "Tarea",
+      "TABLE": {
+        "TASK": "Tarea",
+        "DUE_DATE": "Fecha Limite",
+        "FIELD": "Campo",
+        "ACTIONS": "Acciones"
+      }
+    },
+    "RECOMMENDATIONS": {
+      "POTATO_FIELD": "Campo de Papas:",
+      "POTATO_ADVICE": "Necesita más exposición solar – ajustar redes de sombra.",
+      "MAIZE_FIELD": "Campo de Maíz:",
+      "MAIZE_ADVICE": "Continuar riego regular para mantener humedad del suelo.",
+      "TOMATO_FIELD": "Campo de Tomate:",
+      "TOMATO_ADVICE": "Nutrientes del suelo bajos – considerar fertilización."
+    }
+  },
+  "COMMUNITY": {
+    "TITLE": "Comunidad",
+    "DESCRIPTION": "Conecta con la comunidad mediante recomendaciones para tus cultivos"
+  },
+  "FIELDS": {
+    "title": "Mis campos",
+    "description":"Administras tus campos aqui"
+  },
+  "field_detail": {
+    "location": "Localización: ",
+    "field_size": "Tamaño del campo: ",
+    "crop": "Cultivo: ",
+    "days_since": "Dias desde el plantado: ",
+    "planting_date": "Fecha de plantado: ",
+    "expected": "Fecha esperada de cosecha: ",
+    "soil_type": "Tipo de suelo: ",
+    "watering": "Regado: ",
+    "sunlight": "Luz del sol: ",
+    "progress": {
+      "title": "Progreso e Historia",
+      "watered": "Regado el: ",
+      "fertilized": "Fertilziado el: ",
+      "pest": "Inspecion de pestes el:"
+    },
+    "tasks": "Mis Tareas"
+  },
+  "DAYS": {
+    "SUNDAY": "Domingo",
+    "MONDAY": "Lunes",
+    "TUESDAY": "Martes",
+    "WEDNESDAY": "Miércoles",
+    "THURSDAY": "Jueves",
+    "FRIDAY": "Viernes",
+    "SATURDAY": "Sábado"
+  },
+  "BUTTONS": {
+    "VIEW_ALL": "Ver todo",
+    "SAVE": "Guardar"
+  },
+  "PROFILE": {
+    "title": "Mi Perfil",
+    "PERSONAL_INFO": {
+      "TITLE": "Información personal",
+      "NAME_PLACEHOLDER": "Nombre",
+      "EMAIL_PLACEHOLDER": "Correo electrónico",
+      "PHONE_PLACEHOLDER": "Número de teléfono",
+      "ID_PLACEHOLDER": "Documento de identidad",
+      "NOTIFICATIONS": "Notificaciones",
+      "LOCATION": "Ubicación"
+    },
+    "PASSWORD": {
+      "TITLE": "Cambiar contraseña",
+      "CURRENT_PLACEHOLDER": "Contraseña actual",
+      "NEW_PLACEHOLDER": "Nueva contraseña",
+      "CONFIRM_PLACEHOLDER": "Confirmar nueva contraseña",
+      "SAVE_BUTTON": "Guardar cambios"
+    },
+    "FOOTER": {
+      "LOGOUT": "Cerrar sesión",
+      "DELETE_ACCOUNT": "Eliminar cuenta"
+    }
+  },
+  "NEW_FIELD": {
+    "BUTTONS": {
+      "VIEW_ALL": "Ver todo",
+      "SAVE": "Guardar",
+      "CANCEL": "Cancelar"
+    },
+    "ADD_FIELD": {
+      "TITLE": "Añadir nuevo campo de cultivo",
+      "UPLOAD_IMAGE": "Subir Imagen",
+      "FIELD_NAME_PLACEHOLDER": "Nombre del campo",
+      "LOCATION_PLACEHOLDER": "Ubicación",
+      "FIELD_SIZE_PLACEHOLDER": "Tamaño del campo"
+    }
+  }
+}

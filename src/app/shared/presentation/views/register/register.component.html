@@ -1,0 +1,64 @@
+<div class="split-screen-container">
+  <div class="form-side">
+    <div class="form-wrapper">
+      <h1 class="page-title">Crear Cuenta</h1>
+      <p class="subtitle">Únete a AgroApp para gestionar tus cultivos.</p>
+
+      <form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="styled-form">
+
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre Completo</mat-label>
+          <input matInput formControlName="fullName" placeholder="Ej. Juan Pérez" />
+          <mat-error *ngIf="registerForm.get('fullName')?.hasError('required')">
+            El nombre es requerido
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>DNI (8 cifras)</mat-label>
+          <input matInput formControlName="dni" maxlength="8" placeholder="12345678" />
+          <mat-error *ngIf="registerForm.get('dni')?.hasError('pattern')">
+            El DNI debe tener 8 dígitos numéricos
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Celular (+Pais Numero)</mat-label>
+          <input matInput formControlName="phone" placeholder="+51 999999999" />
+          <mat-error *ngIf="registerForm.get('phone')?.hasError('pattern')">
+            Use formato internacional (ej: +51...)
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Correo Electrónico</mat-label>
+          <input matInput formControlName="email" placeholder="usuario@ejemplo.com" />
+          <mat-error *ngIf="registerForm.get('email')?.hasError('email')">
+            Ingrese un correo válido
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Contraseña (>5 caracteres)</mat-label>
+          <input matInput formControlName="password" type="password" />
+          <mat-error *ngIf="registerForm.get('password')?.hasError('minlength')">
+            Mínimo 6 caracteres
+          </mat-error>
+        </mat-form-field>
+
+        <button mat-flat-button color="primary" type="submit" class="submit-btn">
+          Registrarse
+        </button>
+
+        <p class="login-text">
+          ¿Ya tienes una cuenta?
+          <a routerLink="/login" class="login-link">Inicia sesión</a>
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <div class="image-side">
+    <div class="image-overlay"></div>
+  </div>
+</div>

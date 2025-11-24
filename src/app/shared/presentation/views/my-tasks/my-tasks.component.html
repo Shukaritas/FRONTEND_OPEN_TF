@@ -1,0 +1,49 @@
+<div class="page-container">
+  <div class="tasks-header">
+    <h1>{{'DASHBOARD.TASKS.TITLE' | translate}}</h1>
+    <p>{{'DASHBOARD.TASKS.DESCRIPTION' | translate}}</p>
+  </div>
+
+  <div class="table-container">
+    <table>
+      <thead>
+      <tr>
+        <th>{{ 'DASHBOARD.TASKS.TABLE.TASK' | translate}}</th>
+        <th>{{ 'DASHBOARD.TASKS.TABLE.DUE_DATE' | translate}}</th>
+        <th>{{ 'DASHBOARD.TASKS.TABLE.FIELD' | translate}}</th>
+        <th>{{ 'DASHBOARD.TASKS.TABLE.ACTIONS' | translate}}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let task of tasks$ | async">
+        <td>{{ task.description }}</td>
+        <td>{{ task.due_date }}</td>
+        <td>{{ task.field }}</td>
+        <td class="actions-cell">
+          <button mat-icon-button aria-label="Edit task" (click)="editTask(task, $event)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button aria-label="Delete task" (click)="deleteTask(task.id, $event)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="form-section">
+    <app-task-form
+      *ngIf="showNewTaskForm"
+      (taskCreated)="handleTaskCreated($event)"
+      (cancel)="showNewTaskForm = false">
+    </app-task-form>
+
+    <div *ngIf="!showNewTaskForm" class="new-task-container">
+      <button mat-flat-button class="new-task-button" (click)="showNewTaskForm = true">
+        <mat-icon>add</mat-icon>
+        <span>{{'DASHBOARD.TASKS.BUTTON' | translate}}</span>
+      </button>
+    </div>
+  </div>
+</div>

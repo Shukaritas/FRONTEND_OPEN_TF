@@ -1,0 +1,84 @@
+<div class="dashboard-container">
+  <h1 class="welcome-title">{{ 'DASHBOARD.WELCOME_BACK' | translate }}</h1>
+  <!-- My Crops Section -->
+  <section class="crops-section">
+    <div class="section-header">
+      <h2>{{ 'DASHBOARD.MY_CROPS' | translate }}</h2>
+      <a class="view-all-link" routerLink="/my-fields">
+        {{ 'COMMON.VIEW_ALL' | translate }}
+        <mat-icon>arrow_forward</mat-icon>
+      </a>
+    </div>
+    <div class="crops-grid">
+      @for (crop of crops; track $index) {
+        <mat-card class="crop-card">
+          <div class="crop-image" [style.background-image]="'url(' + crop.image + ')'"></div>
+          <mat-card-content class="crop-content">
+            <h3 class="crop-name">{{ crop.name }}</h3>
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
+  </section>
+  <!-- Harvest Date and Tasks Section -->
+  <div class="info-grid">
+    <!-- Upcoming Harvest Date -->
+    <mat-card class="harvest-card">
+      <mat-card-header>
+        <mat-card-title>{{ 'DASHBOARD.UPCOMING_HARVEST_DATE' | translate }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="harvest-content">
+          <div class="calendar-day">
+            <div class="day-name">{{ harvestDate.dayName | translate }}</div>
+            <div class="day-number">{{ harvestDate.dayNumber }}</div>
+          </div>
+          <div class="harvest-list">
+            @for (harvest of harvestDate.harvests; track $index) {
+              <div class="harvest-item" [class.tomorrow]="harvest.when === 'tomorrow'">
+                <div class="harvest-when">{{ harvest.when }}</div>
+                <div class="harvest-location">{{ harvest.location }}</div> <!-- Directo: "Campo de Granos, Los Grandes" -->
+                <div class="harvest-crop">{{ harvest.crop }}</div> <!-- Directo: "Trigo" -->
+              </div>
+            }
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <!-- Upcoming Tasks -->
+    <mat-card class="tasks-card">
+      <mat-card-header>
+        <mat-card-title>{{ 'DASHBOARD.UPCOMING_TASKS' | translate }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="tasks-list">
+          @for (task of tasks; track $index) {
+            <div class="task-item">
+              <mat-checkbox [(ngModel)]="task.completed" color="primary"></mat-checkbox>
+              <div class="task-details">
+                <div class="task-when">{{ task.when }}</div>
+                <div class="task-location">{{ task.location }}</div>
+                <div class="task-name">{{ task.name }}</div>
+              </div>
+              <button mat-icon-button class="task-close" (click)="deleteTask(task.id, $event)">
+                <mat-icon>close</mat-icon>
+              </button>
+            </div>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <!-- Latest Recommendations -->
+  <section class="recommendations-section">
+    <h2>{{ 'DASHBOARD.LATEST_RECOMMENDATIONS' | translate }}</h2>
+    <ul class="recommendations-list">
+      @for (rec of recommendations; track $index) {
+        <li>
+          <strong>{{ rec.field }}</strong>
+          {{ rec.advice }}
+        </li>
+      }
+    </ul>
+  </section>
+</div>

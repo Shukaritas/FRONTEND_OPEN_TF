@@ -1,0 +1,41 @@
+<aside class="sidebar" [ngClass]="{'collapsed': isCollapsed(), 'mobile': isMobile()}">
+  <div class="sidebar-content">
+    <div class="logo-section">
+      <div class="logo">
+        <img src="/logo.png" alt="Agroapp Logo" class="logo-image" />
+        @if (!isCollapsed()) {
+          <span class="logo-text">agroapp</span>
+        }
+      </div>
+    </div>
+
+    <!-- Navigation Menu -->
+    <nav class="nav-menu">
+      @for (item of menuItems; track item.route) {
+        <a
+          [routerLink]="item.route"
+          routerLinkActive="active"
+          class="nav-item"
+          [title]="item.label | translate">
+          <mat-icon class="nav-icon">{{ item.icon }}</mat-icon>
+          @if (!isCollapsed()) {
+            <span class="nav-label">{{ item.label | translate }}</span>
+          }
+        </a>
+      }
+    </nav>
+
+    <!-- Location Section -->
+    @if (!isCollapsed()) {
+      <div class="location-section">
+        <div class="location-icon">
+          <mat-icon>location_on</mat-icon>
+        </div>
+        <div class="location-info">
+          <p class="location-label">{{ 'SIDEBAR.MY_LOCATION' | translate }}</p>
+          <p class="location-name">{{ 'SIDEBAR.LOCATION_NAME' | translate }}</p>
+        </div>
+      </div>
+    }
+  </div>
+</aside>

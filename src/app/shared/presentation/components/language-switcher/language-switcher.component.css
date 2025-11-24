@@ -1,0 +1,13 @@
+.language-button {
+  color: #424242;
+}
+
+.flag {
+  margin-right: 0.5rem;
+  font-size: 1.25rem;
+}
+
+button.active {
+  background-color: rgba(0, 0, 0, 0.04);
+  font-weight: 500;
+}

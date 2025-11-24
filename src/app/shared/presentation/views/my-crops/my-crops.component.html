@@ -1,0 +1,53 @@
+<div class="page-container">
+  <div class="crops-header">
+    <h1>{{'DASHBOARD.CROPS.TITLE' | translate}}</h1>
+    <p>{{'DASHBOARD.CROPS.DESCRIPTION' | translate}}</p>
+  </div>
+
+  <div class="table-container">
+    <table>
+      <thead>
+      <tr>
+        <th>{{ 'DASHBOARD.CROPS.TABLE.CROP' | translate}}</th>
+        <th>{{ 'DASHBOARD.CROPS.TABLE.PLANTING_DATE' | translate}}</th>
+        <th>{{ 'DASHBOARD.CROPS.TABLE.HARVEST_DATE' | translate}}</th>
+        <th>{{ 'DASHBOARD.CROPS.TABLE.FIELD' | translate}}</th>
+        <th>{{ 'DASHBOARD.CROPS.TABLE.STATUS' | translate}}</th>
+        <th>{{ 'DASHBOARD.CROPS.TABLE.ACTIONS' | translate}}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let crop of crops$ | async">
+        <td>{{ crop.title }}</td>
+        <td>{{ crop.planting_date }}</td>
+        <td>{{ crop.harvest_date }}</td>
+        <td>{{ crop.field }}</td>
+        <td>{{ crop.status }}</td>
+        <td class="actions-cell">
+          <button mat-icon-button aria-label="Edit crop" (click)="editCrop(crop, $event)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button aria-label="Delete crop" (click)="deleteCrop(crop.id, $event)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="form-section">
+    <app-crop-form
+      *ngIf="showNewCropForm"
+      (cropCreated)="handleCropCreated($event)"
+      (cancel)="showNewCropForm = false">
+    </app-crop-form>
+
+    <div *ngIf="!showNewCropForm" class="new-crop-container">
+      <button mat-button class="new-crop-button" (click)="showNewCropForm = true">
+        <mat-icon>add</mat-icon>
+        <span>{{'DASHBOARD.CROPS.BUTTON' | translate}}</span>
+      </button>
+    </div>
+  </div>
+</div>

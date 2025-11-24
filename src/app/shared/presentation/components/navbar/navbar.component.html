@@ -1,0 +1,22 @@
+<nav class="navbar">
+  <div class="nav-left">
+    <button mat-icon-button (click)="toggleSidebar()" class="nav-icon" [title]="'NAVBAR.MENU' | translate">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <button mat-icon-button routerLink="/" class="nav-icon" [title]="'NAVBAR.HOME' | translate">
+      <mat-icon>home</mat-icon>
+    </button>
+  </div>
+
+  <div class="nav-right">
+    <app-language-switcher></app-language-switcher>
+
+    <button mat-icon-button routerLink="/profile" class="nav-icon" [title]="'COMMON.PROFILE' | translate">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+
+    <button mat-icon-button class="nav-icon" (click)="logout()" [title]="'COMMON.LOGOUT' | translate">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </div>
+</nav>

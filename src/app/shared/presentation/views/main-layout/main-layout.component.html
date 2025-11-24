@@ -1,0 +1,12 @@
+<div class="main-layout">
+  <app-sidebar></app-sidebar>
+  @if (isMobile() && !isCollapsed()) {
+    <div class="overlay" (click)="closeSidebar()"></div>
+  }
+  <div class="content-wrapper" [ngClass]="{'sidebar-collapsed': isCollapsed(), 'sidebar-mobile': isMobile()}">
+    <app-navbar></app-navbar>
+    <main class="main-content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

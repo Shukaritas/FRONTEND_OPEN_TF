@@ -1,0 +1,61 @@
+.page-container {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.table-container {
+  flex-grow: 1;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 1.25rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+th {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #666;
+  text-transform: uppercase;
+}
+
+td {
+  font-size: 1rem;
+  color: #333;
+}
+
+.actions-cell {
+  text-align: left;
+}
+
+.actions-cell button {
+  color: #555;
+}
+
+.new-crop-container {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 2rem;
+}
+.new-crop-button {
+  color: white;
+  background-color: #577c61;
+  border-radius: 10px;
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+}
+.new-crop-button:hover {
+  background-color: #577c61;
+  color: #fff;
+}
+.new-crop-button mat-icon {
+  margin-right: 0.5rem;
+}

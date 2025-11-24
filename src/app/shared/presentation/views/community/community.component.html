@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<div class="page-container">
+  <h1>{{'COMMUNITY.TITLE' | translate}}</h1>
+  <p>{{'COMMUNITY.DESCRIPTION' | translate}}</p>
+
+  <div class="page-container">
+    <div class="comment-section">
+      <h2 class="comment-count">
+        {{ (recommendations$ | async)?.length || 0 }} comments
+      </h2>
+
+      <div class="recommendations-list">
+        <div *ngFor="let rec of recommendations$ | async" class="recommendation-item">
+          <p class="user-name">{{ rec.user }}</p>
+          <p class="description">"{{ rec.description }}"</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</html>

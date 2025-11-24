@@ -1,0 +1,442 @@
+{
+  "preview_fields": [
+    {
+      "id": 1,
+      "image_url": "https://images.pexels.com/photos/265216/pexels-photo-265216.jpeg?auto=compress&cs=tinysrgb&w=350&h=350&dpr=1&fit=crop",
+      "title": "Campo de Granos, Los Grandes"
+    },
+    {
+      "id": 2,
+      "image_url": "https://images.unsplash.com/photo-1657639844423-727c61b36de5?auto=compress&cs=tinysrgb&w=350&h=350&fit=crop",
+      "title": "Papas del Sol"
+    },
+    {
+      "id": 3,
+      "image_url": "https://images.pexels.com/photos/1112080/pexels-photo-1112080.jpeg?auto=compress&cs=tinysrgb&w=350&h=350&dpr=1&fit=crop",
+      "title": "Parcela de Maíz La Serrana"
+    },
+    {
+      "id": 4,
+      "image_url": "https://images.unsplash.com/photo-1632153380265-d1f815db5a52?auto=compress&cs=tinysrgb&w=350&h=350&fit=crop",
+      "title": "Invernadero de Tomates"
+    },
+    {
+      "id": 5,
+      "image_url": "https://images.unsplash.com/photo-1602496875541-ac7e686face3?auto=compress&cs=tinysrgb&w=350&h=350&fit=crop",
+      "title": "Campo de Zanahorias Beta"
+    }
+  ],
+  "recommendations": [
+    {
+      "id": 1,
+      "title": "Revisión de Riego",
+      "content": "Cosechar antes de 15/11/2025"
+    },
+    {
+      "id": 2,
+      "title": "Alerta de Plaga",
+      "content": "Inspeccionar cultivo de tomates por posible plaga."
+    },
+    {
+      "id": 3,
+      "title": "Fertilización Necesaria",
+      "content": "Aplicar fertilizante rico en nitrógeno al maíz."
+    }
+  ],
+  "crop_fields": [
+    {
+      "id": 1,
+      "title": "Trigo",
+      "days": "31",
+      "planting_date": "05/09",
+      "harvest_date": "15/12",
+      "field": "Campo de Granos, Los Grandes",
+      "status": "Healthy"
+    },
+    {
+      "id": 2,
+      "title": "Papas",
+      "days": "52",
+      "planting_date": "15/08",
+      "harvest_date": "25/11",
+      "field": "Papas del Sol",
+      "status": "Healthy"
+    },
+    {
+      "id": 3,
+      "title": "Maíz",
+      "days": "78",
+      "planting_date": "20/07",
+      "harvest_date": "10/11",
+      "field": "Parcela de Maíz La Serrana",
+      "status": "Attention"
+    },
+    {
+      "id": 4,
+      "title": "Tomate",
+      "days": "42",
+      "planting_date": "25/08",
+      "harvest_date": "05/12",
+      "field": "Invernadero de Tomates",
+      "status": "Critical"
+    },
+    {
+      "id": 5,
+      "title": "Zanahoria",
+      "days": "26",
+      "planting_date": "10/09",
+      "harvest_date": "15/12",
+      "field": "Campo de Zanahorias Beta",
+      "status": "Healthy"
+    },
+    {
+      "title": "Camote",
+      "days": "",
+      "planting_date": "10/10",
+      "harvest_date": "11/12",
+      "field": "Papas del Sol",
+      "status": "Healthy",
+      "id": 6
+    },
+    {
+      "title": "Albahaca",
+      "days": "",
+      "planting_date": "08/10",
+      "harvest_date": "02/12",
+      "field": "Parcela de Maíz La Serrana",
+      "status": "Healthy",
+      "id": 7
+    }
+  ],
+  "fields": [
+    {
+      "id": 1,
+      "image_url": "https://images.pexels.com/photos/265216/pexels-photo-265216.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "name": "Campo de Granos, Los Grandes",
+      "product": "Trigo",
+      "location": "Lurín",
+      "field_size": "5,000 m2",
+      "crop": "Trigo",
+      "days_since_planting": "31",
+      "planting_date": "05/09/2025",
+      "expecting_harvest": "15/12/2025",
+      "Soil Type": "Loamy Soil",
+      "watering": "2x daily, 1500L each time",
+      "sunlight": "7 hours/day",
+      "status": "Healthy",
+      "progress_history": [
+        {
+          "watered": "05/10/2025",
+          "fertilized": "20/09/2025",
+          "pests": "15/09/2025"
+        }
+      ],
+      "tasks": [
+        {
+          "id": 1,
+          "date": "10/10/2025",
+          "name": "Campo de Granos, Los Grandes",
+          "task": "Check for aphids and apply neem oil if necessary."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "image_url": "https://images.unsplash.com/photo-1657639844423-727c61b36de5?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "name": "Papas del Sol",
+      "product": "Papas",
+      "location": "Cañete",
+      "field_size": "12,000 m2",
+      "crop": "Papas",
+      "days_since_planting": "52",
+      "planting_date": "15/08/2025",
+      "expecting_harvest": "25/11/2025",
+      "Soil Type": "Sandy Loam",
+      "watering": "1x daily, 4000L each time",
+      "sunlight": "9 hours/day",
+      "status": "Healthy",
+      "progress_history": [
+        {
+          "watered": "05/10/2025",
+          "fertilized": "10/09/2025",
+          "pests": "01/09/2025"
+        }
+      ],
+      "tasks": [
+        {
+          "id": 2,
+          "date": "12/10/2025",
+          "name": "Papas del Sol",
+          "task": "Apply nitrogen-rich fertilizer."
+        },
+        {
+          "id": 3,
+          "date": "18/10/2025",
+          "name": "Papas del Sol",
+          "task": "Scout for corn earworm."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "image_url": "https://images.pexels.com/photos/1112080/pexels-photo-1112080.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "name": "Parcela de Maíz La Serrana",
+      "product": "Maíz",
+      "location": "Huarochirí",
+      "field_size": "8,000 m2",
+      "crop": "Maíz",
+      "days_since_planting": "78",
+      "planting_date": "20/07/2025",
+      "expecting_harvest": "10/11/2025",
+      "Soil Type": "Clay Loam",
+      "watering": "3x weekly, 3000L each time",
+      "sunlight": "8 hours/day",
+      "status": "Attention",
+      "progress_history": [
+        {
+          "watered": "04/10/2025",
+          "fertilized": "05/09/2025",
+          "pests": "25/09/2025"
+        }
+      ],
+      "tasks": [
+        {
+          "id": 4,
+          "date": "09/10/2025",
+          "name": "Parcela de Maíz La Serrana",
+          "task": "Investigate yellowing leaves in sector B."
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "image_url": "https://images.unsplash.com/photo-1632153380265-d1f815db5a52?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "name": "Invernadero de Tomates",
+      "product": "Tomate",
+      "location": "Pachacámac",
+      "field_size": "3,000 m2",
+      "crop": "Tomate",
+      "days_since_planting": "42",
+      "planting_date": "25/08/2025",
+      "expecting_harvest": "05/12/2025",
+      "Soil Type": "Well-drained Loam",
+      "watering": "3x daily, 1000L each time",
+      "sunlight": "8 hours/day (controlled)",
+      "status": "Critical",
+      "progress_history": [
+        {
+          "watered": "05/10/2025",
+          "fertilized": "18/09/2025",
+          "pests": "01/10/2025"
+        }
+      ],
+      "tasks": [
+        {
+          "id": 5,
+          "date": "07/10/2025",
+          "name": "Invernadero de Tomates",
+          "task": "Urgent: Apply fungicide to control blight outbreak."
+        },
+        {
+          "id": 6,
+          "date": "08/10/2025",
+          "name": "Invernadero de Tomates",
+          "task": "Remove and destroy infected plants."
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "image_url": "https://images.unsplash.com/photo-1602496875541-ac7e686face3?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "name": "Campo de Zanahorias Beta",
+      "product": "Zanahoria",
+      "location": "Canta",
+      "field_size": "6,500 m2",
+      "crop": "Zanahoria",
+      "days_since_planting": "26",
+      "planting_date": "10/09/2025",
+      "expecting_harvest": "15/12/2025",
+      "Soil Type": "Sandy Soil",
+      "watering": "1x daily, 2500L each time",
+      "sunlight": "7 hours/day",
+      "status": "Healthy",
+      "progress_history": [
+        {
+          "watered": "05/10/2025",
+          "fertilized": "28/09/2025",
+          "pests": "20/09/2025"
+        }
+      ],
+      "tasks": [
+        {
+          "id": 7,
+          "date": "15/10/2025",
+          "name": "Campo de Zanahorias Beta",
+          "task": "Thin seedlings to allow proper growth."
+        }
+      ]
+    }
+  ],
+  "crop_status": [
+    {
+      "id": 1,
+      "status": "Healthy"
+    },
+    {
+      "id": 2,
+      "status": "Healthy"
+    },
+    {
+      "id": 3,
+      "status": "Attention"
+    },
+    {
+      "id": 4,
+      "status": "Critical"
+    },
+    {
+      "id": 5,
+      "status": "Healthy"
+    }
+  ],
+  "upcoming_tasks": [
+    {
+      "id": 5,
+      "date": "07/10/2025",
+      "name": "Invernadero de Tomates",
+      "task": "Urgent: Apply fungicide to control blight outbreak."
+    },
+    {
+      "id": 6,
+      "date": "08/10/2025",
+      "name": "Invernadero de Tomates",
+      "task": "Remove and destroy infected plants."
+    },
+    {
+      "id": 4,
+      "date": "09/10/2025",
+      "name": "Parcela de Maíz La Serrana",
+      "task": "Investigate yellowing leaves in sector B."
+    }
+  ],
+  "task": [
+    {
+      "id": 1,
+      "description": "Check for aphids and apply neem oil if necessary.",
+      "due_date": "10/10",
+      "field": "Campo de Granos, Los Grandes"
+    },
+    {
+      "id": 2,
+      "description": "Apply nitrogen-rich fertilizer.",
+      "due_date": "12/10",
+      "field": "Papas del Sol"
+    },
+    {
+      "id": 3,
+      "description": "Scout for corn earworm.",
+      "due_date": "18/10",
+      "field": "Papas del Sol"
+    },
+    {
+      "id": 4,
+      "description": "Investigate yellowing leaves in sector B.",
+      "due_date": "09/10",
+      "field": "Parcela de Maíz La Serrana"
+    },
+    {
+      "id": 5,
+      "description": "Urgent: Apply fungicide to control blight outbreak.",
+      "due_date": "07/10",
+      "field": "Invernadero de Tomates"
+    },
+    {
+      "id": 6,
+      "description": "Remove and destroy infected plants.",
+      "due_date": "08/10",
+      "field": "Invernadero de Tomates"
+    },
+    {
+      "id": 7,
+      "description": "Thin seedlings to allow proper growth.",
+      "due_date": "15/10",
+      "field": "Campo de Zanahorias Beta"
+    },
+    {
+      "description": "Water tomato",
+      "due_date": "24/10",
+      "field": "Campo de Granos, Los Grandes",
+      "id": 8
+    }
+  ],
+  "community_recommendation": [
+    {
+      "id": 1,
+      "user": "Maria Rodriguez",
+      "description": "Always check the pH of your soil. Most vegetables prefer a slightly acidic soil between 6.0 and 6.8."
+    },
+    {
+      "id": 2,
+      "user": "Carlos Sanchez",
+      "description": "Companion planting can be very effective. Planting basil next to tomatoes can help repel tomato hornworms."
+    },
+    {
+      "id": 3,
+      "user": "Ana Gomez",
+      "description": "Use drip irrigation to conserve water and deliver it directly to the plant roots, reducing fungal diseases."
+    },
+    {
+      "id": 4,
+      "user": "Luis Fernandez",
+      "description": "Crop rotation is key to preventing soil-borne diseases and nutrient depletion. Don't plant the same family in the same spot year after year."
+    },
+    {
+      "id": 5,
+      "user": "Sofia Torres",
+      "description": "Mulching helps retain soil moisture, suppress weeds, and regulate soil temperature. Use organic mulch like straw or wood chips."
+    },
+    {
+      "id": 6,
+      "user": "Javier Diaz",
+      "description": "Introduce beneficial insects like ladybugs and lacewings to naturally control aphid populations."
+    },
+    {
+      "id": 7,
+      "user": "Elena Vargas",
+      "description": "Test your soil annually to understand its nutrient composition and amend it accordingly."
+    },
+    {
+      "id": 8,
+      "user": "David Morales",
+      "description": "Harvesting in the early morning is often best, as plants are most hydrated and temperatures are cooler."
+    },
+    {
+      "id": 9,
+      "user": "Isabel Castillo",
+      "description": "Prune your plants to improve air circulation and light penetration, which can reduce the risk of disease."
+    },
+    {
+      "id": 10,
+      "user": "Miguel Ramos",
+      "description": "Making your own compost is a great way to recycle organic waste and create a nutrient-rich soil amendment for free."
+    }
+  ],
+  "user": [
+    {
+      "id": 1,
+      "user_name": "Bruce",
+      "email": "wanejhone@gmail.com",
+      "phone_number": "+51924667078",
+      "identificator": "72880972",
+      "password": "123456"
+    },
+    {
+      "id": 2,
+      "user_name": "Estefano",
+      "email": "este@gmail.com",
+      "phone_number": "+51999999123",
+      "identificator": "12345678",
+      "password": "12345678"
+    }
+  ]
+}

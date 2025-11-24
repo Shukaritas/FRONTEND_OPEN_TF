@@ -1,0 +1,33 @@
+<div class="form-container">
+  <header class="page-header">
+    <button class="back-button" routerLink="/my-fields">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+  </header>
+
+  <main>
+    <h2>{{'NEW_FIELD.ADD_FIELD.TITLE' | translate}}</h2>
+
+    <div class="image-preview-container">
+      <img [src]="imageUrl" alt="Image preview" class="image-preview">
+      <label for="file-upload" class="file-upload-label">
+        <mat-icon>add_a_photo</mat-icon>
+        <span>{{'NEW_FIELD.ADD_FIELD.UPLOAD_IMAGE' | translate}}</span>
+      </label>
+      <input id="file-upload" type="file" (change)="onFileSelected($event)" accept="image/*">
+    </div>
+
+    <form #addFieldForm="ngForm" (ngSubmit)="onSave()">
+      <div class="form-fields">
+        <input type="text" [placeholder]="'NEW_FIELD.ADD_FIELD.FIELD_NAME_PLACEHOLDER' | translate" name="fieldName" required>
+        <input type="text" [placeholder]="'NEW_FIELD.ADD_FIELD.LOCATION_PLACEHOLDER' | translate" name="location" required>
+        <input type="text" [placeholder]="'NEW_FIELD.ADD_FIELD.FIELD_SIZE_PLACEHOLDER' | translate" name="fieldSize" required>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="cancel-btn" routerLink="/my-fields">{{'NEW_FIELD.BUTTONS.CANCEL' | translate}}</button>
+        <button type="submit" class="save-btn" [disabled]="!addFieldForm.form.valid || !imageFile">{{'NEW_FIELD.BUTTONS.SAVE' | translate}}</button>
+      </div>
+    </form>
+  </main>
+</div>

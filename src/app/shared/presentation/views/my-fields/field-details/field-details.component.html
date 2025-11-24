@@ -1,0 +1,65 @@
+<div class="details-container" *ngIf="field$ | async as field">
+  <header class="page-header">
+    <button class="back-button" routerLink="/my-fields">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h2>{{'FIELDS.title'| translate}}</h2>
+  </header>
+
+  <div class="banner-image" [style.backgroundImage]="'url(' + field.image_url + ')'"></div>
+  <div class="field-title-header">
+    <h1>{{ field.name }}</h1>
+    <div *ngIf="field.status" class="status-chip" [ngClass]="field.status.toLowerCase()">
+      <span class="status-dot"></span>
+      {{ field.status }}
+    </div>
+  </div>
+  <p class="field-crop-subtitle">{{ field.crop }}</p>
+
+  <main class="details-content">
+    <section class="details-section">
+      <div class="detail-item"><span>{{'field_detail.location'| translate}}</span> <strong>{{ field.location }}</strong></div>
+      <div class="detail-item"><span>{{'field_detail.field_size'| translate}}</span> <strong>{{ field.field_size }}</strong></div>
+      <div class="detail-item"><span>{{'field_detail.crop'| translate}}</span> <strong>{{ field.crop }}</strong></div>
+      <div class="detail-item"><span>{{'field_detail.days_since'| translate}}</span> <strong>{{ field.days_since_planting }} Days</strong></div>
+      <div class="detail-item"><span>{{'field_detail.planting_date'| translate}}</span> <strong>{{ field.planting_date }}</strong></div>
+      <div class="detail-item"><span>{{'field_detail.expected'| translate}}</span> <strong>{{ field.expecting_harvest }}</strong></div>
+      <div class="detail-item"><span>{{'field_detail.soil_type'| translate}}</span> <strong>{{ field['Soil Type'] }}</strong></div>
+      <div class="detail-item"><span>{{'field_detail.watering'| translate}}</span> <strong>{{ field.watering }}</strong></div>
+      <div class="detail-item"><span>{{'field_detail.sunlight'| translate}}</span> <strong>{{ field.sunlight }}</strong></div>
+    </section>
+
+    <section class="history-tasks-section">
+      <div class="history-card">
+        <div class="card-header">
+          <h3>{{'field_detail.progress.title'| translate}}</h3>
+          <button class="header-button" (click)="editHistory(field)">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+        <div class="history-item"><span>{{'field_detail.progress.watered'| translate}}</span> <strong>{{ field.progress_history[0]?.watered }}</strong></div>
+        <div class="history-item"><span>{{'field_detail.progress.fertilized'| translate}}</span> <strong>{{ field.progress_history[0]?.fertilized }}</strong></div>
+        <div class="history-item"><span>{{'field_detail.progress.pest'| translate}}</span> <strong>{{ field.progress_history[0]?.pests }}</strong></div>
+      </div>
+
+      <div class="tasks-card">
+        <div class="card-header">
+          <h3>{{'field_detail.tasks'| translate}}</h3>
+          <button class="header-button" (click)="addTask(field)">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+        <div class="task-list">
+          <div *ngFor="let task of field.tasks" class="task-item">
+            <mat-checkbox></mat-checkbox>
+            <div class="task-info">
+              <span class="task-date">{{ task.date }}</span>
+              <p class="task-name">{{ task.task }}</p>
+            </div>
+            <button class="task-delete-btn" (click)="deleteTask(field, task.id, $event)"><mat-icon>close</mat-icon></button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>

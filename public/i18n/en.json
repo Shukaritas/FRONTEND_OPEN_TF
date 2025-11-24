@@ -1,0 +1,164 @@
+{
+  "NAVBAR": {
+    "HOME": "Home",
+    "MENU": "Menu"
+  },
+  "SIDEBAR": {
+    "DASHBOARD": "Dashboard",
+    "MY_CROPS": "My crops",
+    "MY_FIELDS": "My fields",
+    "MY_TASKS": "My tasks",
+    "COMMUNITY": "Community",
+    "MY_LOCATION": "My location",
+    "LOCATION_NAME": "Fundo Santa Rosa"
+  },
+  "LANGUAGE": {
+    "SELECT": "Select language",
+    "ENGLISH": "English",
+    "SPANISH": "Spanish"
+  },
+  "COMMON": {
+    "WELCOME": "Welcome",
+    "LOGOUT": "Logout",
+    "PROFILE": "Profile",
+    "DAYS": "Days",
+    "TODAY": "Today",
+    "TOMORROW": "Tomorrow",
+    "VIEW_ALL": "View All"
+  },
+  "LOGIN": {
+    "WELCOME_BACK": "Welcome Back!",
+    "USERNAME": "Username",
+    "PASSWORD": "Password",
+    "SIGN_IN": "Sign in",
+    "NO_ACCOUNT": "Don't have an account?",
+    "SIGN_UP": "Sign up"
+  },
+  "DASHBOARD": {
+    "WELCOME_BACK": "Welcome back!",
+    "MY_CROPS": "My crops",
+    "UPCOMING_HARVEST_DATE": "Upcoming harvest date",
+    "UPCOMING_TASKS": "Upcoming tasks",
+    "LATEST_RECOMMENDATIONS": "Latest Recommendations",
+    "IN_DAYS": "In {{count}} days",
+    "CROPS": {
+      "TITLE": "My Crop Fields",
+      "DESCRIPTION": "Manage your crop fields here",
+      "BUTTON": "New Crop",
+      "TOMATO": "Tomato",
+      "LETTUCE": "Lettuce",
+      "CARROT": "Carrot",
+      "WHEAT": "Wheat",
+      "CACAO": "Cacao",
+      "COFFEE": "Coffee",
+      "TABLE": {
+        "CROP": "Crop",
+        "PLANTING_DATE": "Planting Date",
+        "HARVEST_DATE": "Harvest Date",
+        "FIELD": "Field",
+        "STATUS": "Status",
+        "ACTIONS": "Actions"
+      }
+    },
+    "LOCATIONS": {
+      "PARCELA_SAN_JOSE": "Parcela San José",
+      "FUNDO_LOS_PINOS": "Fundo Los Pinos",
+      "FUNDO_SANTA_ROSA": "Fundo Santa Rosa"
+    },
+    "TASKS": {
+      "TITLE": "My Tasks",
+      "DESCRIPTION": "Manage your fields here",
+      "BUTTON": "New task",
+      "TABLE": {
+        "TASK": "Task",
+        "DUE_DATE": "Due date",
+        "FIELD": "Field",
+        "ACTIONS": "Actions"
+      }
+    },
+    "RECOMMENDATIONS": {
+      "POTATO_FIELD": "Potato Field:",
+      "POTATO_ADVICE": "Needs more sunlight exposure – adjust shading nets.",
+      "MAIZE_FIELD": "Maize Field:",
+      "MAIZE_ADVICE": "Continue regular watering to maintain soil moisture.",
+      "TOMATO_FIELD": "Tomato Field:",
+      "TOMATO_ADVICE": "Soil nutrients low – consider fertilization."
+    }
+  },
+  "COMMUNITY": {
+    "TITLE": "Community",
+    "DESCRIPTION": "Connect with the community by recommendations for your fields"
+  },
+  "FIELDS": {
+    "title": "My fields",
+    "description": "Manage your fields here"
+  },
+  "field_detail": {
+    "location": "Location: ",
+    "field_size": "Field Size: ",
+    "crop": "Crop: ",
+    "days_since": "Days since planting: ",
+    "planting_date": "Planting Date: ",
+    "expected": "Expected Harvest Date: ",
+    "soil_type": "Soil Type: ",
+    "watering": "Watering: ",
+    "sunlight": "Sunlight: ",
+    "progress": {
+      "title": "Progress & History",
+      "watered": "Watered: ",
+      "fertilized": "Fertilized: ",
+      "pest": "Pest Inspection: "
+    },
+    "tasks": "My Taks"
+  },
+  "DAYS": {
+    "SUNDAY": "Sunday",
+    "MONDAY": "Monday",
+    "TUESDAY": "Tuesday",
+    "WEDNESDAY": "Wednesday",
+    "THURSDAY": "Thursday",
+    "FRIDAY": "Friday",
+    "SATURDAY": "Saturday"
+  },
+  "BUTTONS": {
+    "VIEW_ALL": "View all",
+    "SAVE": "Save"
+  },
+  "PROFILE": {
+    "title": "My Profile",
+    "PERSONAL_INFO": {
+      "TITLE": "Personal information",
+      "NAME_PLACEHOLDER": "Name",
+      "EMAIL_PLACEHOLDER": "E-mail",
+      "PHONE_PLACEHOLDER": "Phone number",
+      "ID_PLACEHOLDER": "Identity document",
+      "NOTIFICATIONS": "Notifications",
+      "LOCATION": "Location"
+    },
+    "PASSWORD": {
+      "TITLE": "Change password",
+      "CURRENT_PLACEHOLDER": "Current password",
+      "NEW_PLACEHOLDER": "New password",
+      "CONFIRM_PLACEHOLDER": "Confirm new password",
+      "SAVE_BUTTON": "Save changes"
+    },
+    "FOOTER": {
+      "LOGOUT": "Log out",
+      "DELETE_ACCOUNT": "Delete account"
+    }
+  },
+  "NEW_FIELD": {
+    "BUTTONS": {
+      "VIEW_ALL": "View all",
+      "SAVE": "Save",
+      "CANCEL": "Cancel"
+    },
+    "ADD_FIELD": {
+      "TITLE": "Add new crop field",
+      "UPLOAD_IMAGE": "Upload Image",
+      "FIELD_NAME_PLACEHOLDER": "Field name",
+      "LOCATION_PLACEHOLDER": "Location",
+      "FIELD_SIZE_PLACEHOLDER": "Field Size"
+    }
+  }
+}
