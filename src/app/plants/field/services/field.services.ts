@@ -12,6 +12,7 @@ import {enviroment} from '../../../../enviroment/enviroment';
 export class FieldService {
 
   private fieldUrl = enviroment.BASE_URL + enviroment.ENDPOINT_PATH_FIELDS;
+  private storageUrl = `${enviroment.BASE_URL}/storage`;
 
   constructor(private http: HttpClient) {}
 
@@ -21,8 +22,15 @@ export class FieldService {
     );
   }
 
-  createField(field: Omit<Field, 'id'>): Observable<Field> {
-    return this.http.post<Field>(this.fieldUrl, field);
+  getFieldsByUserId(userId: number): Observable<Field[]> {
+    const url = `${this.fieldUrl}/user/${userId}`;
+    return this.http.get<any[]>(url).pipe(
+      map(response => FieldAssembler.toEntitiesFromResponse(response))
+    );
+  }
+
+  createField(fieldPayload: any): Observable<Field> {
+    return this.http.post<Field>(this.fieldUrl, fieldPayload);
   }
 
   deleteField(id: number): Observable<{}> {
@@ -33,5 +41,11 @@ export class FieldService {
   updateField(field: Field): Observable<Field> {
     const url = `${this.fieldUrl}/${field.id}`;
     return this.http.put<Field>(url, field);
+  }
+
+  uploadImage(file: File): Observable<{fileUrl: string}> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post<{fileUrl: string}>(`${this.storageUrl}/upload`, formData);
   }
 }

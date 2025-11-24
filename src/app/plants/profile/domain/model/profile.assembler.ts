@@ -5,11 +5,22 @@ export class UserAssembler {
   public static toEntityFromResource(resource: any): User {
     const user = new User();
     user.id = resource.id;
-    user.user_name = resource.user_name;
+    user.userName = resource.userName;
     user.email = resource.email;
-    user.phone_number = resource.phone_number;
+    user.phoneNumber = resource.phoneNumber;
     user.identificator = resource.identificator;
     user.password = resource.password;
     return user;
+  }
+
+  public static toResourceFromEntity(user: User): any {
+    return {
+      id: user.id,
+      userName: user.userName,
+      email: user.email,
+      phoneNumber: user.phoneNumber,
+      identificator: user.identificator,
+      password: user.password
+    };
   }
 }

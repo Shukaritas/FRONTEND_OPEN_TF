@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 import { Crop } from '../domain/model/crop.entity';
 import { CropAssembler } from '../domain/model/crop.assembler';
 import {enviroment} from '../../../../enviroment/enviroment';
@@ -18,6 +18,14 @@ export class CropService {
   getCrops(): Observable<Crop[]> {
     return this.http.get<any[]>(this.cropUrl).pipe(
       map(response => CropAssembler.toEntitiesFromResponse(response))
+    );
+  }
+
+  getCropByFieldId(fieldId: number): Observable<Crop | null> {
+    const url = `${this.cropUrl}/field/${fieldId}`;
+    return this.http.get<any>(url).pipe(
+      map(response => response ? CropAssembler.toEntityFromResource(response) : null),
+      catchError(() => of(null))
     );
   }
 

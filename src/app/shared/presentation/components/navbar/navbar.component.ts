@@ -25,6 +25,7 @@ export class NavbarComponent {
 
   logout() {
     if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem('authToken');
       localStorage.removeItem('isLoggedIn');
       this.router.navigate(['/login']);
     }

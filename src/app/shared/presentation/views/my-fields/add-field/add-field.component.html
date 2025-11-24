@@ -19,14 +19,16 @@
 
     <form #addFieldForm="ngForm" (ngSubmit)="onSave()">
       <div class="form-fields">
-        <input type="text" [placeholder]="'NEW_FIELD.ADD_FIELD.FIELD_NAME_PLACEHOLDER' | translate" name="fieldName" required>
-        <input type="text" [placeholder]="'NEW_FIELD.ADD_FIELD.LOCATION_PLACEHOLDER' | translate" name="location" required>
-        <input type="text" [placeholder]="'NEW_FIELD.ADD_FIELD.FIELD_SIZE_PLACEHOLDER' | translate" name="fieldSize" required>
+        <input type="text" [(ngModel)]="fieldName" [placeholder]="'NEW_FIELD.ADD_FIELD.FIELD_NAME_PLACEHOLDER' | translate" name="fieldName" required>
+        <input type="text" [(ngModel)]="location" [placeholder]="'NEW_FIELD.ADD_FIELD.LOCATION_PLACEHOLDER' | translate" name="location" required>
+        <input type="text" [(ngModel)]="fieldSize" [placeholder]="'NEW_FIELD.ADD_FIELD.FIELD_SIZE_PLACEHOLDER' | translate" name="fieldSize" required>
       </div>
 
       <div class="form-actions">
-        <button type="button" class="cancel-btn" routerLink="/my-fields">{{'NEW_FIELD.BUTTONS.CANCEL' | translate}}</button>
-        <button type="submit" class="save-btn" [disabled]="!addFieldForm.form.valid || !imageFile">{{'NEW_FIELD.BUTTONS.SAVE' | translate}}</button>
+        <button type="button" class="cancel-btn" routerLink="/my-fields" [disabled]="isUploading">{{'NEW_FIELD.BUTTONS.CANCEL' | translate}}</button>
+        <button type="submit" class="save-btn" [disabled]="!addFieldForm.form.valid || isUploading">
+          {{ isUploading ? ('NEW_FIELD.BUTTONS.SAVING' | translate) : ('NEW_FIELD.BUTTONS.SAVE' | translate) }}
+        </button>
       </div>
     </form>
   </main>

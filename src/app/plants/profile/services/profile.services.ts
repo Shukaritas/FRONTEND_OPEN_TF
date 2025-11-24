@@ -6,15 +6,19 @@ import { enviroment } from '../../../../enviroment/enviroment';
 import { User } from '../domain/model/profile.entity';
 import { UserAssembler } from '../domain/model/profile.assembler';
 
+interface LoginResponse {
+  token: string;
+  [key: string]: any; // Para campos adicionales que pueda devolver el backend
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private userUrl = `${enviroment.BASE_URL}${enviroment.ENDPOINT_PATH_USER}`;
+  private userUrl = `${enviroment.BASE_URL}/users`; // CRUD base
 
   constructor(private http: HttpClient) {}
 
-  // Método existente
   getUserById(id: number): Observable<User> {
     const url = `${this.userUrl}/${id}`;
     return this.http.get<any>(url).pipe(
@@ -22,44 +26,42 @@ export class UserService {
     );
   }
 
-  // NUEVO: Para validar el Login por correo
-  getUserByEmail(email: string): Observable<User | null> {
-    // Json-server permite filtrar por query params
-    const url = `${this.userUrl}?email=${email}`;
-    return this.http.get<any[]>(url).pipe(
-      map(response => {
-        if (response && response.length > 0) {
-          return UserAssembler.toEntityFromResource(response[0]);
-        }
-        return null;
-      })
-    );
+  // Nuevo login contra backend Spring Boot
+  login(email: string, password: string): Observable<LoginResponse> {
+    const url = `${enviroment.BASE_URL}/users/sign-in`;
+    return this.http.post<LoginResponse>(url, { email, password });
   }
 
-  // NUEVO: Para el Registro
+  // Registro contra backend Spring Boot
   createUser(user: User): Observable<User> {
-    return this.http.post<any>(this.userUrl, user).pipe(
+    const url = `${enviroment.BASE_URL}/users/sign-up`;
+    const body = UserAssembler.toResourceFromEntity(user);
+    return this.http.post<any>(url, body).pipe(
       map(response => UserAssembler.toEntityFromResource(response))
     );
   }
 
-  // Método existente
   updateUser(user: User): Observable<User> {
     const url = `${this.userUrl}/${user.id}`;
-    return this.http.put<User>(url, user);
+    const body = UserAssembler.toResourceFromEntity(user);
+    return this.http.put<any>(url, body).pipe(
+      map(response => UserAssembler.toEntityFromResource(response))
+    );
   }
 
-  // Método existente
   deleteAccountData(id: number): Observable<User> {
     const url = `${this.userUrl}/${id}`;
-    const clearedUser = {
+    const clearedUser: User = {
       id: id,
-      user_name: "",
+      userName: "",
       email: "",
-      phone_number: "",
+      phoneNumber: "",
       identificator: "",
       password: ""
     };
-    return this.http.put<User>(url, clearedUser);
+    const body = UserAssembler.toResourceFromEntity(clearedUser);
+    return this.http.put<any>(url, body).pipe(
+      map(response => UserAssembler.toEntityFromResource(response))
+    );
   }
 }

@@ -42,7 +42,7 @@ export class ProfileComponent implements OnInit {
   onSavePersonalInfo() {
     if (!this.user) return;
 
-    if (this.user.phone_number.length !== 9) {
+    if (this.user.phoneNumber.length !== 9) {
       alert('Phone number must have 9 digits.');
       return;
     }
@@ -56,7 +56,7 @@ export class ProfileComponent implements OnInit {
         this.user = response;
         alert('Personal information saved successfully!');
       },
-      error: (err) => alert('Could not save personal information.')
+      error: () => alert('Could not save personal information.')
     });
   }
 
@@ -76,7 +76,7 @@ export class ProfileComponent implements OnInit {
       return;
     }
 
-    const updatedUser = { ...this.user, password: this.newPassword };
+    const updatedUser = { ...this.user, password: this.newPassword } as User;
 
     this.userService.updateUser(updatedUser).subscribe({
       next: (response) => {
@@ -86,14 +86,16 @@ export class ProfileComponent implements OnInit {
         this.confirmNewPassword = '';
         alert('Password changed successfully!');
       },
-      error: (err) => alert('Could not change password.')
+      error: () => alert('Could not change password.')
     });
   }
 
   onLogout() {
+    localStorage.removeItem('authToken');
     localStorage.removeItem('isLoggedIn');
     this.router.navigate(['/login']);
   }
+
   onDeleteAccount(): void {
     if (!this.user) return;
 
