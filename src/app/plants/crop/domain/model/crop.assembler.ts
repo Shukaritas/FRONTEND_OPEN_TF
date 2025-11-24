@@ -8,11 +8,16 @@ export class CropAssembler {
   public static toEntityFromResource(resource: any): Crop {
     const crop = new Crop();
     crop.id = resource.id;
-    crop.title = resource.title;
-    crop.planting_date = resource.planting_date;
-    crop.harvest_date = resource.harvest_date;
-    crop.field = resource.field;
-    crop.status = resource.status;
+    // El backend puede enviar 'crop' en lugar de 'title'
+    crop.title = resource.title || resource.crop || '';
+    // Mapeo de fechas: aceptar snake_case y camelCase
+    crop.planting_date = resource.planting_date || resource.plantingDate || '';
+    crop.harvest_date = resource.harvest_date || resource.harvestDate || '';
+    crop.field = resource.field || '';
+    crop.status = resource.status || '';
+    crop.soilType = resource.soilType || resource.soil_type || '';
+    crop.sunlight = resource.sunlight || resource.sunlightExposure || '';
+    crop.watering = resource.watering || resource.wateringPlan || '';
     return crop;
   }
 

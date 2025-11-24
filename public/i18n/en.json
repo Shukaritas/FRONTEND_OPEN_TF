@@ -161,5 +161,19 @@
       "LOCATION_PLACEHOLDER": "Location",
       "FIELD_SIZE_PLACEHOLDER": "Field Size"
     }
+  },
+  "CROPS_FORM": {
+    "ADD_TITLE": "Add a New Crop",
+    "SUBTITLE": "Complete the information and save your crop",
+    "TITLE_LABEL": "Title",
+    "PLANTING_DATE_LABEL": "Planting Date",
+    "HARVEST_DATE_LABEL": "Harvest Date",
+    "FIELD_LABEL": "Field",
+    "STATUS_LABEL": "Status",
+    "SOIL_TYPE_LABEL": "Soil Type",
+    "SUNLIGHT_LABEL": "Sunlight",
+    "WATERING_LABEL": "Watering",
+    "CANCEL": "Cancel",
+    "SAVE": "Save"
   }
 }

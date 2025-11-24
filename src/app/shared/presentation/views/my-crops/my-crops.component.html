@@ -19,8 +19,8 @@
       <tbody>
       <tr *ngFor="let crop of crops$ | async">
         <td>{{ crop.title }}</td>
-        <td>{{ crop.planting_date }}</td>
-        <td>{{ crop.harvest_date }}</td>
+        <td>{{ crop.planting_date | date:'dd/MM/yyyy' }}</td>
+        <td>{{ crop.harvest_date | date:'dd/MM/yyyy' }}</td>
         <td>{{ crop.field }}</td>
         <td>{{ crop.status }}</td>
         <td class="actions-cell">
@@ -39,7 +39,7 @@
   <div class="form-section">
     <app-crop-form
       *ngIf="showNewCropForm"
-      (cropCreated)="handleCropCreated($event)"
+      (cropCreated)="handleCropCreated()"
       (cancel)="showNewCropForm = false">
     </app-crop-form>
 

@@ -6,6 +6,10 @@ export class Crop{
   harvest_date:string;
   field:string;
   status:string;
+  fieldName?: string; // nombre del campo asociado (inyectado en frontend)
+  soilType?: string;
+  sunlight?: string;
+  watering?: string;
 
   constructor(){
     this.id=0;
@@ -15,5 +19,9 @@ export class Crop{
     this.harvest_date="";
     this.field="";
     this.status="";
+    this.fieldName = undefined;
+    this.soilType = undefined;
+    this.sunlight = undefined;
+    this.watering = undefined;
   }
 }

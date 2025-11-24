@@ -1,8 +1,10 @@
 import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { FieldService } from '../../../../../plants/field/services/field.services';
+import { CropService, CreateCropFieldRequest } from '../../../../../plants/crop/services/crop.services';
+import { Router } from '@angular/router';
 import { Crop } from '../../../../../plants/crop/domain/model/crop.entity';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -10,7 +12,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { enviroment } from '../../../../../../enviroment/enviroment';
+import { TextFieldModule } from '@angular/cdk/text-field';
+import { TranslatePipe } from '@ngx-translate/core';
 
 export interface Field {
   id: number;
@@ -22,51 +25,86 @@ export interface Field {
   standalone: true,
   imports: [
     CommonModule, FormsModule, MatCardModule, MatFormFieldModule,
-    MatInputModule, MatSelectModule, MatIconModule, MatButtonModule
+    MatInputModule, MatSelectModule, MatIconModule, MatButtonModule,
+    TextFieldModule, TranslatePipe
   ],
   templateUrl: './my-crops-form.component.html',
   styleUrls: ['./my-crops-form.component.css']
 })
 export class CropFormComponent implements OnInit {
-  @Output() cropCreated = new EventEmitter<{ cropData: Omit<Crop, 'id'>, fieldId: number }>();
+  @Output() cropCreated = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();
-
 
   public newCrop: Partial<Crop> = {
     title: '',
     planting_date: '',
     harvest_date: '',
-    status: 'Healthy'
+    status: 'Healthy',
+    soilType: '',
+    sunlight: '',
+    watering: ''
   };
   public selectedFieldId: number | null = null;
 
   public fields$!: Observable<Field[]>;
-  private baseUrl = enviroment.BASE_URL;
   public statuses: string[] = ['Healthy', 'Attention', 'Critical'];
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private fieldService: FieldService,
+    private cropService: CropService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    this.fields$ = this.http.get<Field[]>(`${this.baseUrl}/fields`);
+    const userIdStr = localStorage.getItem('userId');
+    const userId = userIdStr ? Number(userIdStr) : null;
+    if (!userId) {
+      alert('No se encontró el usuario en sesión. Inicia sesión nuevamente.');
+      this.fields$ = of([]);
+      return;
+    }
+    this.fields$ = this.fieldService.getFieldsByUserId(userId);
+  }
+
+  private toIsoDate(dateStr: string): string {
+    // dateStr viene en formato yyyy-MM-dd del input date HTML
+    if (!dateStr) return '';
+    return `${dateStr}T00:00:00`; // Suficiente para LocalDateTime en backend
   }
 
   onSubmit(): void {
-    if (this.selectedFieldId && this.newCrop.title && this.newCrop.planting_date && this.newCrop.harvest_date) {
-      const cropDataToSend: Omit<Crop, 'id'> = {
-        title: this.newCrop.title,
-        planting_date: this.newCrop.planting_date,
-        harvest_date: this.newCrop.harvest_date,
-        status: this.newCrop.status || 'Healthy',
-        field: '',
-        days: '0'
-      };
-      this.cropCreated.emit({ cropData: cropDataToSend, fieldId: this.selectedFieldId });
-    } else {
-      alert('Please fill all fields and select a field.');
+    if (!this.selectedFieldId || !this.newCrop.title || !this.newCrop.planting_date || !this.newCrop.harvest_date) {
+      alert('Por favor completa todos los campos y selecciona un field.');
+      return;
     }
+
+    const payload: CreateCropFieldRequest = {
+      fieldId: this.selectedFieldId,
+      crop: this.newCrop.title!,
+      plantingDate: this.toIsoDate(this.newCrop.planting_date!),
+      harvestDate: this.toIsoDate(this.newCrop.harvest_date!),
+      status: (this.newCrop.status as 'Healthy' | 'Attention' | 'Critical') || 'Healthy',
+      soilType: this.newCrop.soilType || '',
+      sunlight: this.newCrop.sunlight || '',
+      watering: this.newCrop.watering || ''
+    };
+
+    this.cropService.createCrop(payload).subscribe({
+      next: () => {
+        // Emitir evento para que el padre refresque lista o navegar
+        this.cropCreated.emit();
+        // Opcional: navegar a lista de cultivos
+        this.router.navigate(['/my-crops']).catch(() => {});
+      },
+      error: err => {
+        console.error('Error creando cultivo', err);
+        alert('No se pudo crear el cultivo. Intenta nuevamente.');
+      }
+    });
   }
 
   onCancel(): void {
     this.cancel.emit();
+    this.router.navigate(['/my-crops']).catch(() => {});
   }
 }

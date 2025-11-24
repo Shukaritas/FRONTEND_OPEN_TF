@@ -57,3 +57,16 @@ td {
 .new-task-button mat-icon {
   margin-right: 0.5rem;
 }
+
+/* Checkbox verde corporativo */
+input[type="checkbox"],
+mat-checkbox ::ng-deep .mat-mdc-checkbox-ripple,
+mat-checkbox ::ng-deep .mat-mdc-checkbox .mdc-checkbox__background {
+  accent-color: #2E7D32;
+}
+
+mat-checkbox ::ng-deep .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background {
+  background-color: #2E7D32 !important;
+  border-color: #2E7D32 !important;
+}
+

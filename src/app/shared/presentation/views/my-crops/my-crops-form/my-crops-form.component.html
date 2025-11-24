@@ -2,29 +2,29 @@
   <div class="card-header">
     <div class="title">
       <mat-icon>yard</mat-icon>
-      <h3>Add a New Crop</h3>
+      <h3>{{ 'CROPS_FORM.ADD_TITLE' | translate }}</h3>
     </div>
-    <span class="subtitle">Complete the information and save your crop</span>
+    <span class="subtitle">{{ 'CROPS_FORM.SUBTITLE' | translate }}</span>
   </div>
 
   <div class="form-grid">
     <mat-form-field appearance="outline">
-      <mat-label>Title</mat-label>
+      <mat-label>{{ 'CROPS_FORM.TITLE_LABEL' | translate }}</mat-label>
       <input matInput [(ngModel)]="newCrop.title" name="title" required placeholder="e.g., Tomato">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>Planting Date</mat-label>
+      <mat-label>{{ 'CROPS_FORM.PLANTING_DATE_LABEL' | translate }}</mat-label>
       <input matInput type="date" [(ngModel)]="newCrop.planting_date" name="planting_date" required>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>Harvest Date</mat-label>
+      <mat-label>{{ 'CROPS_FORM.HARVEST_DATE_LABEL' | translate }}</mat-label>
       <input matInput type="date" [(ngModel)]="newCrop.harvest_date" name="harvest_date" required>
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>Field</mat-label>
+      <mat-label>{{ 'CROPS_FORM.FIELD_LABEL' | translate }}</mat-label>
       <mat-select [(ngModel)]="selectedFieldId" name="selectedFieldId" required>
         <mat-option *ngFor="let field of fields$ | async" [value]="field.id">
           {{field.name}}
@@ -33,7 +33,7 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>Status</mat-label>
+      <mat-label>{{ 'CROPS_FORM.STATUS_LABEL' | translate }}</mat-label>
       <mat-select [(ngModel)]="newCrop.status" name="status" required>
         <mat-select-trigger>
           <span class="chip" [ngClass]="newCrop.status | lowercase">{{ newCrop.status || '—' }}</span>
@@ -43,16 +43,58 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+
+    <mat-form-field appearance="outline" class="textarea-field">
+      <mat-label>{{ 'CROPS_FORM.SOIL_TYPE_LABEL' | translate }}</mat-label>
+      <textarea
+        matInput
+        [(ngModel)]="newCrop.soilType"
+        name="soilType"
+        placeholder="e.g., Loamy, clay-rich with good drainage"
+        rows="1"
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="1"
+        cdkAutosizeMaxRows="5">
+      </textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="textarea-field">
+      <mat-label>{{ 'CROPS_FORM.SUNLIGHT_LABEL' | translate }}</mat-label>
+      <textarea
+        matInput
+        [(ngModel)]="newCrop.sunlight"
+        name="sunlight"
+        placeholder="e.g., Full sun, 6-8 hours daily"
+        rows="1"
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="1"
+        cdkAutosizeMaxRows="5">
+      </textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="textarea-field">
+      <mat-label>{{ 'CROPS_FORM.WATERING_LABEL' | translate }}</mat-label>
+      <textarea
+        matInput
+        [(ngModel)]="newCrop.watering"
+        name="watering"
+        placeholder="e.g., Daily in morning, 2-3 liters per plant"
+        rows="1"
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="1"
+        cdkAutosizeMaxRows="5">
+      </textarea>
+    </mat-form-field>
   </div>
 
   <div class="form-actions">
     <button mat-flat-button class="cancel-btn" (click)="onCancel()">
       <mat-icon>arrow_back</mat-icon>
-      Cancel
+      {{ 'CROPS_FORM.CANCEL' | translate }}
     </button>
     <button mat-flat-button class="save-btn" (click)="onSubmit()">
       <mat-icon>save</mat-icon>
-      Save
+      {{ 'CROPS_FORM.SAVE' | translate }}
     </button>
   </div>
 </mat-card>

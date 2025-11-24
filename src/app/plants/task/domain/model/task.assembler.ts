@@ -9,13 +9,17 @@ export class TaskAssembler {
     const task = new Task();
     task.id = resource.id;
     task.description = resource.description;
-    task.due_date = resource.due_date;
-    task.field = resource.field;
+    // El backend envía dueDate (camelCase), mapear a due_date
+    task.due_date = resource.dueDate || resource.due_date || '';
+    // El backend envía fieldId (numérico), y no siempre field name
+    task.field = resource.field || '';
+    // Preservar el fieldId original en una propiedad dinámica para usos posteriores (edición)
+    (task as any).fieldId = resource.fieldId ?? resource.field_id ?? null;
     return task;
   }
 
   /**
-   * CORREGIDO: Convierte un array de recursos directamente a un array de Tasks.
+   * Convierte un array de recursos directamente a un array de Tasks.
    * Ya no espera un objeto contenedor.
    */
   public static toEntitiesFromResponse(response: any[]): Task[] {

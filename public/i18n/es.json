@@ -161,5 +161,19 @@
       "LOCATION_PLACEHOLDER": "Ubicación",
       "FIELD_SIZE_PLACEHOLDER": "Tamaño del campo"
     }
+  },
+  "CROPS_FORM": {
+    "ADD_TITLE": "Añadir Nuevo Cultivo",
+    "SUBTITLE": "Completa la información y guarda tu cultivo",
+    "TITLE_LABEL": "Título",
+    "PLANTING_DATE_LABEL": "Fecha de siembra",
+    "HARVEST_DATE_LABEL": "Fecha de cosecha",
+    "FIELD_LABEL": "Campo",
+    "STATUS_LABEL": "Estado",
+    "SOIL_TYPE_LABEL": "Tipo de suelo",
+    "SUNLIGHT_LABEL": "Luz solar",
+    "WATERING_LABEL": "Riego",
+    "CANCEL": "Cancelar",
+    "SAVE": "Guardar"
   }
 }

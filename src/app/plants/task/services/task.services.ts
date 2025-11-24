@@ -36,4 +36,18 @@ export class TaskService {
     const url = `${this.taskUrl}/${task.id}`;
     return this.http.put<Task>(url, task);
   }
+
+  // Nuevo: actualizar con payload camelCase específico del backend
+  updateTaskByPayload(id: number, payload: { fieldId: number; description: string; dueDate: string }): Observable<any> {
+    const url = `${this.taskUrl}/${id}`;
+    return this.http.put<any>(url, payload);
+  }
+
+  getTasksByFieldId(fieldId: number): Observable<Task[]> {
+    const url = `${this.taskUrl}/field/${fieldId}`;
+    return this.http.get<any[]>(url).pipe(
+      map(response => TaskAssembler.toEntitiesFromResponse(response))
+    );
+  }
+
 }

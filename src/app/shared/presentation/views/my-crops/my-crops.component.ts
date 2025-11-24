@@ -1,13 +1,15 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BehaviorSubject, Observable, forkJoin, switchMap, of } from 'rxjs';
+import { BehaviorSubject, Observable, forkJoin, switchMap, of, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 import { Crop } from '../../../../plants/crop/domain/model/crop.entity';
 import { CropService } from '../../../../plants/crop/services/crop.services';
 import { TranslatePipe } from '@ngx-translate/core';
-import {CropFormComponent} from './my-crops-form/my-crops-form.component';
+import { CropFormComponent } from './my-crops-form/my-crops-form.component';
+import { EditCropDialogComponent, EditCropDialogData } from './edit-crop-dialog/edit-crop-dialog.component';
 import { enviroment } from '../../../../../enviroment/enviroment';
 
 export interface Field {
@@ -33,7 +35,6 @@ export interface Field {
   styleUrls: ['./my-crops.component.css']
 })
 export class MyCropsComponent implements OnInit {
-
   private cropsSubject = new BehaviorSubject<Crop[]>([]);
   public crops$: Observable<Crop[]> = this.cropsSubject.asObservable();
   public showNewCropForm = false;
@@ -42,109 +43,150 @@ export class MyCropsComponent implements OnInit {
   constructor(
     private cropService: CropService,
     private http: HttpClient,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
-    this.cropService.getCrops().subscribe((crops: Crop[]) => {
-      this.cropsSubject.next(crops);
-      this.cdr.detectChanges();
+    this.loadCropsWithFields();
+  }
+
+  private loadCropsWithFields(): void {
+    const userIdStr = localStorage.getItem('userId');
+    const userId = userIdStr ? Number(userIdStr) : null;
+    if (!userId) {
+      console.error('No userId en sesión');
+      this.cropsSubject.next([]);
+      return;
+    }
+
+    // 1. Obtener campos del usuario
+    this.http.get<any[]>(`${this.baseUrl}/fields/user/${userId}`).pipe(
+      switchMap(fields => {
+        if (!fields || fields.length === 0) return of([]);
+        // 2. Por cada field obtener su crop (si existe)
+        const requests = fields.map(field =>
+          this.cropService.getCropByFieldId(field.id).pipe(
+            map(crop => {
+              if (!crop) return null;
+              // Asignar el nombre del field directamente a crop.field
+              return { ...crop, field: field.name } as Crop;
+            })
+          )
+        );
+        return forkJoin(requests).pipe(
+          map(results => results.filter(c => c !== null) as Crop[])
+        );
+      })
+    ).subscribe({
+      next: (cropsConField: Crop[]) => {
+        this.cropsSubject.next(cropsConField);
+        this.cdr.detectChanges();
+      },
+      error: err => {
+        console.error('Error cargando cultivos:', err);
+        this.cropsSubject.next([]);
+        this.cdr.detectChanges();
+      }
     });
   }
 
-  handleCropCreated({ cropData, fieldId }: { cropData: Omit<Crop, 'id'>, fieldId: number }): void {
-    this.http.get<Field>(`${this.baseUrl}/fields/${fieldId}`).pipe(
-      switchMap(selectedField => {
-        const updatedFieldData = {
-          ...selectedField,
-          crop: cropData.title,
-          product: cropData.title,
-          planting_date: cropData.planting_date,
-          expecting_harvest: cropData.harvest_date
-        };
+  private reloadCrops(): void { this.loadCropsWithFields(); }
 
-        const cropToCreate: Omit<Crop, 'id'> = {
-          ...cropData,
-          field: selectedField.name
-        };
+  handleCropCreated(): void {
+    this.showNewCropForm = false;
+    this.reloadCrops();
+  }
 
-        const createCrop$ = this.cropService.createCrop(cropToCreate);
-        const updateField$ = this.http.put<Field>(`${this.baseUrl}/fields/${fieldId}`, updatedFieldData);
+  editCrop(crop: Crop, event: Event): void {
+    event.stopPropagation();
 
-        return forkJoin({ createdCrop: createCrop$, updatedField: updateField$ });
-      })
-    ).subscribe({
-      next: ({ createdCrop }) => {
-        const currentCrops = this.cropsSubject.getValue();
-        this.cropsSubject.next([...currentCrops, createdCrop]);
-        this.showNewCropForm = false;
-        this.cdr.detectChanges();
-      },
-      error: (err) => console.error('Error creating crop and updating field', err)
+    // Abrir el diálogo de edición con los datos actuales
+    const dialogRef = this.dialog.open(EditCropDialogComponent, {
+      width: '450px',
+      data: {
+        title: crop.title,
+        status: crop.status
+      } as EditCropDialogData
+    });
+
+    // Suscribirse al resultado del diálogo
+    dialogRef.afterClosed().subscribe(result => {
+      // Si el usuario canceló, result será undefined
+      if (!result) return;
+
+      // Construir objeto actualizado con los datos del diálogo
+      const updatedCrop: Crop = {
+        id: crop.id,
+        title: result.title.trim(),
+        planting_date: crop.planting_date,
+        harvest_date: crop.harvest_date,
+        field: crop.field || '',
+        status: result.status,
+        days: crop.days || '0',
+        soilType: crop.soilType,
+        sunlight: crop.sunlight,
+        watering: crop.watering
+      };
+
+      // Llamada al servicio para actualizar el cultivo
+      this.cropService.updateCrop(updatedCrop).subscribe({
+        next: () => {
+          /*
+           * CORRECCIÓN CRÍTICA - Bug de desaparición de datos:
+           * NO reemplazamos el objeto completo con la respuesta del backend porque:
+           * 1. La respuesta no incluye 'field' (nombre del campo) que calculamos en el frontend
+           * 2. Podría no incluir todas las fechas y propiedades formateadas
+           *
+           * En su lugar, fusionamos solo los cambios que hicimos (title y status)
+           * manteniendo todas las demás propiedades locales intactas.
+           *
+           * NOTA ARQUITECTURAL:
+           * No es necesario hacer PUT a /fields para "actualizar el nombre del cultivo en el campo".
+           * El backend usa una arquitectura relacional donde:
+           * - La tabla 'crop_fields' almacena los datos del cultivo (title, status, fechas, etc.)
+           * - La tabla 'fields' almacena los datos del campo físico (ubicación, tamaño, etc.)
+           * - La relación se mantiene mediante fieldId en crop_fields
+           *
+           * Al actualizar el cultivo aquí, cualquier vista que consulte los cultivos asociados
+           * a un campo (como FieldDetailsComponent) mostrará automáticamente el nuevo nombre
+           * al recargar, ya que consulta directamente la tabla crop_fields actualizada.
+           */
+          const currentCrops = this.cropsSubject.getValue();
+          const updatedList = currentCrops.map(c =>
+            c.id === crop.id
+              ? { ...c, title: result.title.trim(), status: result.status } // Solo actualizar lo que cambió
+              : c
+          );
+          this.cropsSubject.next(updatedList);
+          this.cdr.detectChanges();
+          alert('Cultivo actualizado correctamente');
+        },
+        error: err => {
+          console.error('Error actualizando cultivo:', err);
+          alert('No se pudo actualizar el cultivo');
+        }
+      });
     });
   }
 
   deleteCrop(id: number, event: Event): void {
     event.stopPropagation();
-    if (!confirm('Are you sure you want to delete this crop?')) return;
+    if (!confirm('¿Estás seguro de que quieres eliminar este cultivo?')) return;
 
-    const cropToDelete = this.cropsSubject.getValue().find(c => c.id === id);
-    if (!cropToDelete) return;
-
-    const deleteCrop$ = this.cropService.deleteCrop(id);
-    const updateFields$ = this.http.get<Field[]>(`${this.baseUrl}/fields`).pipe(
-      switchMap(fields => {
-        const fieldsToUpdate = fields.filter(f => f.crop === cropToDelete.title);
-        if (fieldsToUpdate.length === 0) return of([]);
-
-        const updateCalls = fieldsToUpdate.map(field => {
-          const updatedField = { ...field, crop: '', product: '', planting_date: '', expecting_harvest: '' };
-          return this.http.put(`${this.baseUrl}/fields/${field.id}`, updatedField);
-        });
-        return forkJoin(updateCalls);
-      })
-    );
-
-    forkJoin([deleteCrop$, updateFields$]).subscribe({
+    // Llamada simple al servicio sin actualizar fields
+    this.cropService.deleteCrop(id).subscribe({
       next: () => {
+        // Actualizar lista local removiendo el cultivo eliminado
         const updatedCrops = this.cropsSubject.getValue().filter(crop => crop.id !== id);
         this.cropsSubject.next(updatedCrops);
         this.cdr.detectChanges();
+        alert('Cultivo eliminado correctamente');
       },
-      error: (err) => console.error(`Error deleting crop ${id}`, err)
-    });
-  }
-
-  editCrop(crop: Crop, event: Event): void {
-    event.stopPropagation();
-    const newTitle = prompt('Enter the new title:', crop.title);
-    if (!newTitle || newTitle === crop.title) return;
-
-    const oldTitle = crop.title;
-    const updatedCropData: Crop = { ...crop, title: newTitle };
-
-    const updateCrop$ = this.cropService.updateCrop(updatedCropData);
-
-    const updateFields$ = this.http.get<Field[]>(`${this.baseUrl}/fields`).pipe(
-      switchMap(fields => {
-        const fieldsToUpdate = fields.filter(f => f.crop === oldTitle);
-        if (fieldsToUpdate.length === 0) return of([]);
-
-        const updateCalls = fieldsToUpdate.map(field => {
-          const updatedField = { ...field, crop: newTitle, product: newTitle };
-          return this.http.put(`${this.baseUrl}/fields/${field.id}`, updatedField);
-        });
-        return forkJoin(updateCalls);
-      })
-    );
-
-    forkJoin([updateCrop$, updateFields$]).subscribe({
-      next: ([updatedCrop]) => {
-        const updatedCrops = this.cropsSubject.getValue().map(c => c.id === updatedCrop.id ? updatedCrop : c);
-        this.cropsSubject.next(updatedCrops);
-        this.cdr.detectChanges();
-      },
-      error: (err) => console.error(`Error updating crop ${crop.id}`, err)
+      error: err => {
+        console.error(`Error eliminando cultivo ${id}:`, err);
+        alert('No se pudo eliminar el cultivo');
+      }
     });
   }
 }

@@ -7,7 +7,7 @@ export const enviroment = {
   ENDPOINT_PATH_FIELDS:"/fields",
   ENDPOINT_PATH_CROP_STATUS:"/crop_status",
   ENDPOINT_PATH_UPCOMING_TASKS:"/upcoming_tasks",
-  ENDPOINT_PATH_TASK:"/task",
+  ENDPOINT_PATH_TASK:"/tasks",
   ENDPOINT_PATH_COMMUNITY_RECOMMENDATION:"/community_recommendation",
   ENDPOINT_PATH_USER:"/users",
 

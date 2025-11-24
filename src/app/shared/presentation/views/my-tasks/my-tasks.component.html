@@ -17,7 +17,7 @@
       <tbody>
       <tr *ngFor="let task of tasks$ | async">
         <td>{{ task.description }}</td>
-        <td>{{ task.due_date }}</td>
+        <td>{{ task.due_date | date:'dd/MM/yyyy' }}</td>
         <td>{{ task.field }}</td>
         <td class="actions-cell">
           <button mat-icon-button aria-label="Edit task" (click)="editTask(task, $event)">
@@ -30,20 +30,5 @@
       </tr>
       </tbody>
     </table>
-  </div>
-
-  <div class="form-section">
-    <app-task-form
-      *ngIf="showNewTaskForm"
-      (taskCreated)="handleTaskCreated($event)"
-      (cancel)="showNewTaskForm = false">
-    </app-task-form>
-
-    <div *ngIf="!showNewTaskForm" class="new-task-container">
-      <button mat-flat-button class="new-task-button" (click)="showNewTaskForm = true">
-        <mat-icon>add</mat-icon>
-        <span>{{'DASHBOARD.TASKS.BUTTON' | translate}}</span>
-      </button>
-    </div>
   </div>
 </div>
