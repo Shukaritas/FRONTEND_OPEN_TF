@@ -5,8 +5,9 @@ export class CommunityAssembler {
   public static toEntityFromResource(resource: any): Community {
     const communityEntry = new Community();
     communityEntry.id = resource.id;
-    communityEntry.user = resource.user;
-    communityEntry.description = resource.description;
+    communityEntry.user = resource.userName || resource.user || '';
+    communityEntry.description = resource.comment || resource.description || '';
+    communityEntry.userId = resource.userId ?? resource.user_id ?? undefined;
     return communityEntry;
   }
 

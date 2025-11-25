@@ -160,6 +160,49 @@
   text-decoration: none;
 }
 
+/* AÑADIDO: Estilos para el estado vacío */
+.empty-state-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.empty-text {
+  font-size: 1.2rem;
+  color: #777;
+  margin: 0;
+  text-align: center;
+}
+
+/* AÑADIDO: Estilos para el botón circular grande */
+.add-button-large {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background-color: #a8bfa8;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.add-button-large:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+}
+
+.add-button-large mat-icon {
+  font-size: 40px;
+  color: #000;
+}
+
 /* Media query para pantallas más pequeñas */
 @media (max-width: 1024px) {
   .fields-grid {

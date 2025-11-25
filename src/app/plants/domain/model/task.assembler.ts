@@ -9,8 +9,9 @@ export class TaskAssembler {
     const task = new Task();
     task.id = resource.id;
     task.description = resource.description;
-    task.due_date = resource.due_date;
-    task.field = resource.field;
+    task.due_date = resource.dueDate || resource.due_date || '';
+    task.field = resource.fieldId ?? resource.field_id ?? resource.field ?? '' as any;
+    (task as any).fieldId = resource.fieldId ?? resource.field_id ?? null;
     return task;
   }
 

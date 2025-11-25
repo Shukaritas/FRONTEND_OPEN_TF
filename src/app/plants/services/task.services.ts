@@ -23,4 +23,12 @@ export class TaskService {
       })
     );
   }
+
+  // Nuevo método: obtener tareas por fieldId
+  getTasksByFieldId(fieldId: number): Observable<Task[]> {
+    const url = `${this.taskUrl}/field/${fieldId}`;
+    return this.http.get<any[]>(url).pipe(
+      map(response => TaskAssembler.toEntitiesFromResponse(response))
+    );
+  }
 }

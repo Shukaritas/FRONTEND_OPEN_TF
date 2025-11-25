@@ -87,19 +87,32 @@
   },
   "COMMUNITY": {
     "TITLE": "Community",
-    "DESCRIPTION": "Connect with the community by recommendations for your fields"
+    "DESCRIPTION": "Connect with the community by recommendations for your fields",
+    "NEW_POST": "New post",
+    "PLACEHOLDER_COMMENT": "Write your recommendation...",
+    "PUBLISH": "Publish",
+    "MESSAGES": {
+      "EMPTY_COMMENT": "Comment is empty",
+      "UNAUTHENTICATED": "User not authenticated",
+      "INVALID_USER_ID": "Invalid user ID",
+      "PUBLISH_SUCCESS": "Recommendation published",
+      "PUBLISH_ERROR": "Error publishing recommendation"
+    },
+    "CANCEL": "Cancel"
   },
   "FIELDS": {
     "title": "My fields",
-    "description": "Manage your fields here"
+    "description": "Manage your fields here",
+    "days_left": "days left"
   },
   "field_detail": {
     "location": "Location: ",
     "field_size": "Field Size: ",
     "crop": "Crop: ",
-    "days_since": "Days since planting: ",
     "planting_date": "Planting Date: ",
     "expected": "Expected Harvest Date: ",
+    "harvest_date": "Harvest Date: ",
+    "days_until_harvest": "Days until harvest: ",
     "soil_type": "Soil Type: ",
     "watering": "Watering: ",
     "sunlight": "Sunlight: ",
@@ -175,5 +188,18 @@
     "WATERING_LABEL": "Watering",
     "CANCEL": "Cancel",
     "SAVE": "Save"
+  },
+  "EMPTY": {
+    "NO_FIELDS": "No fields registered yet",
+    "NO_CROPS": "No crops registered yet",
+    "NO_UPCOMING_HARVESTS": "No upcoming harvests yet",
+    "NO_UPCOMING_TASKS": "No upcoming tasks yet",
+    "NO_RECOMMENDATIONS": "No recommendations yet"
+  },
+  "GENERIC_RECOMMENDATIONS": {
+    "ADVICE_CHECK_CROPS": "Check the status of your crops",
+    "ADVICE_VIEW_TASKS": "Look at your upcoming tasks",
+    "ADVICE_PLAN_IRRIGATION": "Plan your irrigation",
+    "ADVICE_UPDATE_FIELDS": "Update your field information"
   }
 }

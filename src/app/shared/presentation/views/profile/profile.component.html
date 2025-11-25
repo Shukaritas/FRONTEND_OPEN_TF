@@ -16,10 +16,10 @@
         <input type="email" [(ngModel)]="user.email" name="email" [placeholder]="'PROFILE.PERSONAL_INFO.EMAIL_PLACEHOLDER' | translate">
       </div>
       <div class="form-field">
-        <input type="text" [(ngModel)]="user.phoneNumber" name="phoneNumber" [placeholder]="'PROFILE.PERSONAL_INFO.PHONE_PLACEHOLDER' | translate">
+        <input type="text" [(ngModel)]="user.phoneNumber" name="phoneNumber" placeholder="+51XXXXXXXX" [placeholder]="'PROFILE.PERSONAL_INFO.PHONE_PLACEHOLDER' | translate">
       </div>
       <div class="form-field">
-        <input type="text" [(ngModel)]="user.identificator" name="identificator" [placeholder]="'PROFILE.PERSONAL_INFO.ID_PLACEHOLDER' | translate">
+        <input type="text" [(ngModel)]="user.identificator" name="identificator" [readonly]="true" [placeholder]="'PROFILE.PERSONAL_INFO.ID_PLACEHOLDER' | translate">
       </div>
 
       <div class="form-actions right">
@@ -38,14 +38,29 @@
 
     <section class="form-section">
       <h2>{{'PROFILE.PASSWORD.TITLE' | translate}}</h2>
-      <div class="form-field">
-        <input type="password" [(ngModel)]="currentPassword" name="currentPassword" [placeholder]="'PROFILE.PASSWORD.CURRENT_PLACEHOLDER' | translate">
+      <div class="form-field password-field">
+        <div class="password-input-wrapper">
+          <input [type]="showCurrentPassword ? 'text' : 'password'" [(ngModel)]="currentPassword" name="currentPassword" [placeholder]="'PROFILE.PASSWORD.CURRENT_PLACEHOLDER' | translate">
+          <button type="button" class="reveal-btn" (click)="toggleCurrent()">
+            <mat-icon>{{ showCurrentPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+        </div>
       </div>
-      <div class="form-field">
-        <input type="password" [(ngModel)]="newPassword" name="newPassword" [placeholder]="'PROFILE.PASSWORD.NEW_PLACEHOLDER' | translate">
+      <div class="form-field password-field">
+        <div class="password-input-wrapper">
+          <input [type]="showNewPassword ? 'text' : 'password'" [(ngModel)]="newPassword" name="newPassword" [placeholder]="'PROFILE.PASSWORD.NEW_PLACEHOLDER' | translate">
+          <button type="button" class="reveal-btn" (click)="toggleNew()">
+            <mat-icon>{{ showNewPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+        </div>
       </div>
-      <div class="form-field">
-        <input type="password" [(ngModel)]="confirmNewPassword" name="confirmPassword" [placeholder]="'PROFILE.PASSWORD.CONFIRM_PLACEHOLDER' | translate">
+      <div class="form-field password-field">
+        <div class="password-input-wrapper">
+          <input [type]="showConfirmPassword ? 'text' : 'password'" [(ngModel)]="confirmNewPassword" name="confirmPassword" [placeholder]="'PROFILE.PASSWORD.CONFIRM_PLACEHOLDER' | translate">
+          <button type="button" class="reveal-btn" (click)="toggleConfirm()">
+            <mat-icon>{{ showConfirmPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+        </div>
       </div>
       <div class="form-actions right">
         <button class="save-btn" (click)="onChangePassword()">{{'PROFILE.PASSWORD.CONFIRM_PLACEHOLDER' | translate}}</button>

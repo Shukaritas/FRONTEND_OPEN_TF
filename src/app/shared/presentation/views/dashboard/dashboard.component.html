@@ -10,13 +10,17 @@
       </a>
     </div>
     <div class="crops-grid">
-      @for (crop of crops; track $index) {
-        <mat-card class="crop-card">
-          <div class="crop-image" [style.background-image]="'url(' + crop.image + ')'"></div>
-          <mat-card-content class="crop-content">
-            <h3 class="crop-name">{{ crop.name }}</h3>
-          </mat-card-content>
-        </mat-card>
+      @if (crops.length === 0) {
+        <div class="empty-state">{{ 'EMPTY.NO_CROPS' | translate }}</div>
+      } @else {
+        @for (crop of crops; track $index) {
+          <mat-card class="crop-card">
+            <div class="crop-image" [style.background-image]="'url(' + crop.image + ')'"></div>
+            <mat-card-content class="crop-content">
+              <h3 class="crop-name">{{ crop.name }}</h3>
+            </mat-card-content>
+          </mat-card>
+        }
       }
     </div>
   </section>
@@ -34,12 +38,16 @@
             <div class="day-number">{{ harvestDate.dayNumber }}</div>
           </div>
           <div class="harvest-list">
-            @for (harvest of harvestDate.harvests; track $index) {
-              <div class="harvest-item" [class.tomorrow]="harvest.when === 'tomorrow'">
-                <div class="harvest-when">{{ harvest.when }}</div>
-                <div class="harvest-location">{{ harvest.location }}</div> <!-- Directo: "Campo de Granos, Los Grandes" -->
-                <div class="harvest-crop">{{ harvest.crop }}</div> <!-- Directo: "Trigo" -->
-              </div>
+            @if (harvestDate.harvests.length === 0) {
+              <div class="empty-state">{{ 'EMPTY.NO_UPCOMING_HARVESTS' | translate }}</div>
+            } @else {
+              @for (harvest of harvestDate.harvests; track $index) {
+                <div class="harvest-item" [class.tomorrow]="harvest.when === 'tomorrow'">
+                  <div class="harvest-when">{{ harvest.when }}</div>
+                  <div class="harvest-location">{{ harvest.location }}</div> <!-- Directo: "Campo de Granos, Los Grandes" -->
+                  <div class="harvest-crop">{{ harvest.crop }}</div> <!-- Directo: "Trigo" -->
+                </div>
+              }
             }
           </div>
         </div>
@@ -52,18 +60,28 @@
       </mat-card-header>
       <mat-card-content>
         <div class="tasks-list">
-          @for (task of tasks; track $index) {
-            <div class="task-item">
-              <mat-checkbox [(ngModel)]="task.completed" color="primary"></mat-checkbox>
-              <div class="task-details">
-                <div class="task-when">{{ task.when }}</div>
-                <div class="task-location">{{ task.location }}</div>
-                <div class="task-name">{{ task.name }}</div>
+          @if (tasks.length === 0) {
+            <div class="empty-state">{{ 'EMPTY.NO_UPCOMING_TASKS' | translate }}</div>
+          } @else {
+            @for (task of tasks; track $index) {
+              <div class="task-item">
+                <mat-checkbox [(ngModel)]="task.completed" color="primary"></mat-checkbox>
+                <div class="task-details">
+                  <div class="task-when">
+                    @if (task.isToday) {
+                      {{ 'COMMON.TODAY' | translate }}
+                    } @else {
+                      {{ task.date | date:'dd/MM/yyyy' }}
+                    }
+                  </div>
+                  <div class="task-location">{{ task.field }}</div>
+                  <div class="task-name">{{ task.description }}</div>
+                </div>
+                <button mat-icon-button class="task-close" (click)="deleteTask(task.id, $event)">
+                  <mat-icon>close</mat-icon>
+                </button>
               </div>
-              <button mat-icon-button class="task-close" (click)="deleteTask(task.id, $event)">
-                <mat-icon>close</mat-icon>
-              </button>
-            </div>
+            }
           }
         </div>
       </mat-card-content>
@@ -72,13 +90,11 @@
   <!-- Latest Recommendations -->
   <section class="recommendations-section">
     <h2>{{ 'DASHBOARD.LATEST_RECOMMENDATIONS' | translate }}</h2>
-    <ul class="recommendations-list">
-      @for (rec of recommendations; track $index) {
-        <li>
-          <strong>{{ rec.field }}</strong>
-          {{ rec.advice }}
-        </li>
-      }
+    <ul class="recommendations-list generic">
+      <li>{{ 'GENERIC_RECOMMENDATIONS.ADVICE_CHECK_CROPS' | translate }}</li>
+      <li>{{ 'GENERIC_RECOMMENDATIONS.ADVICE_VIEW_TASKS' | translate }}</li>
+      <li>{{ 'GENERIC_RECOMMENDATIONS.ADVICE_PLAN_IRRIGATION' | translate }}</li>
+      <li>{{ 'GENERIC_RECOMMENDATIONS.ADVICE_UPDATE_FIELDS' | translate }}</li>
     </ul>
   </section>
 </div>

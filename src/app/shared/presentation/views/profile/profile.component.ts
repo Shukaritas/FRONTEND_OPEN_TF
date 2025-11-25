@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import {UserService} from '../../../../plants/profile/services/profile.services';
 import {User} from '../../../../plants/profile/domain/model/profile.entity';
 import {TranslatePipe} from '@ngx-translate/core';
+import { UserEventsService } from '../../../infrastructure/services/user-events.service';
 
 
 @Component({
@@ -26,6 +27,7 @@ import {TranslatePipe} from '@ngx-translate/core';
 export class ProfileComponent implements OnInit {
   private userService = inject(UserService);
   private router = inject(Router);
+  private userEvents = inject(UserEventsService);
 
   public user: User = new User();
 
@@ -33,60 +35,96 @@ export class ProfileComponent implements OnInit {
   public newPassword = '';
   public confirmNewPassword = '';
 
+  public showCurrentPassword = false;
+  public showNewPassword = false;
+  public showConfirmPassword = false;
+
+  private originalEmail: string = ''; // Email original para detectar cambios
+  private originalUserName: string = '';
+
   ngOnInit() {
-    this.userService.getUserById(1).subscribe(userData => {
-      this.user = userData;
+    const storedId = localStorage.getItem('userId');
+    if (!storedId) {
+      // Sin sesión: redirigir a login
+      this.router.navigate(['/login']);
+      return;
+    }
+    const numericId = parseInt(storedId, 10);
+    if (isNaN(numericId)) {
+      // ID inválido: limpiar y redirigir
+      this.onLogout();
+      return;
+    }
+
+    this.userService.getUserById(numericId).subscribe({
+      next: (userData) => {
+        this.user = userData;
+        this.originalEmail = this.user.email;
+        this.originalUserName = this.user.userName; // Capturar nombre inicial
+      },
+      error: (err) => {
+        console.error('Error cargando usuario', err);
+        // Si el backend falla (404 / borrado), cerrar sesión y redirigir
+        this.onLogout();
+      }
     });
   }
 
   onSavePersonalInfo() {
     if (!this.user) return;
 
-    if (this.user.phoneNumber.length !== 9) {
-      alert('Phone number must have 9 digits.');
+    // Validación teléfono: debe iniciar con '+' seguido de código país y luego dígitos (mínimo +<código><8 dígitos>)
+    const phone = this.user.phoneNumber.trim();
+    const phoneRegex = /^\+[0-9]{1,3}[0-9]{6,11}$/; // código país 1-3 dígitos + número 6-11 dígitos
+    if (!phoneRegex.test(phone)) {
+      alert('El número de teléfono debe incluir prefijo internacional. Ejemplo: +51XXXXXXXX');
       return;
     }
-    if (this.user.identificator.length !== 8) {
-      alert('Identity document must have 8 digits.');
-      return;
-    }
+
+    // DNI no editable, se omite validación de longitud para evitar bloqueo si backend maneja distinto.
 
     this.userService.updateUser(this.user).subscribe({
       next: (response) => {
         this.user = response;
-        alert('Personal information saved successfully!');
+        if (this.user.email !== this.originalEmail) {
+          alert('Tu correo ha cambiado. Por seguridad, tu sesión se cerrará.');
+          this.onLogout();
+          return;
+        }
+        if (this.user.userName !== this.originalUserName) {
+          this.userEvents.emitUserNameChanged({ oldName: this.originalUserName, newName: this.user.userName });
+          this.originalUserName = this.user.userName; // actualizar referencia
+        }
+        alert('Datos actualizados');
+        this.originalEmail = this.user.email;
       },
-      error: () => alert('Could not save personal information.')
+      error: () => alert('No se pudieron guardar los datos personales.')
     });
   }
 
   onChangePassword() {
-    if (!this.user || !this.user.password) return;
+    if (!this.user) return;
 
     if (!this.currentPassword || !this.newPassword || !this.confirmNewPassword) {
-      alert('Please fill all password fields.');
-      return;
-    }
-    if (this.currentPassword !== this.user.password) {
-      alert('Current password is incorrect.');
+      alert('Complete todos los campos de contraseña.');
       return;
     }
     if (this.newPassword !== this.confirmNewPassword) {
-      alert('New passwords do not match.');
+      alert('Las nuevas contraseñas no coinciden.');
       return;
     }
-
-    const updatedUser = { ...this.user, password: this.newPassword } as User;
-
-    this.userService.updateUser(updatedUser).subscribe({
-      next: (response) => {
-        this.user = response;
+    // Llamar endpoint dedicado
+    this.userService.changePassword(this.user.id, this.currentPassword, this.newPassword).subscribe({
+      next: () => {
         this.currentPassword = '';
         this.newPassword = '';
         this.confirmNewPassword = '';
-        alert('Password changed successfully!');
+        alert('Contraseña actualizada correctamente.');
       },
-      error: () => alert('Could not change password.')
+      error: (err) => {
+        console.error('Error cambiando contraseña', err);
+        alert('No se pudo cambiar la contraseña. Verifique la actual.');
+      }
     });
   }
 
@@ -99,19 +137,23 @@ export class ProfileComponent implements OnInit {
   onDeleteAccount(): void {
     if (!this.user) return;
 
-    const confirmation = confirm('Are you sure you want to delete your account? All your data will be erased and this action cannot be undone.');
+    const confirmation = confirm('¿Estás seguro de que deseas eliminar tu cuenta? Tus datos se borrarán y esta acción no se puede deshacer.');
 
     if (confirmation) {
-      this.userService.deleteAccountData(this.user.id).subscribe({
+      this.userService.deleteUser(this.user.id).subscribe({
         next: () => {
-          alert('Account deleted successfully.');
+          alert('Tu cuenta ha sido eliminada. ¡Hasta pronto!');
           this.onLogout();
         },
         error: (err) => {
-          console.error('Error deleting account:', err);
-          alert('There was an error deleting your account.');
+          console.error('Error eliminando la cuenta:', err);
+          alert('Hubo un error eliminando tu cuenta.');
         }
       });
     }
   }
+
+  toggleCurrent() { this.showCurrentPassword = !this.showCurrentPassword; }
+  toggleNew() { this.showNewPassword = !this.showNewPassword; }
+  toggleConfirm() { this.showConfirmPassword = !this.showConfirmPassword; }
 }

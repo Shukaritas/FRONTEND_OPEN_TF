@@ -92,6 +92,20 @@ export class FieldDetailsComponent implements OnInit {
                     watering: (crop as any).watering || ''
                   } : undefined
                 };
+
+                // Cálculo adicional: días hasta cosecha (si harvestDate disponible)
+                if (normalized.crop?.harvestDate) {
+                  const today = new Date(); today.setHours(0,0,0,0);
+                  const harvestDate = new Date(normalized.crop.harvestDate); harvestDate.setHours(0,0,0,0);
+                  if (!isNaN(harvestDate.getTime())) {
+                    const diffTime = harvestDate.getTime() - today.getTime();
+                    let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    if (diffDays < 0) diffDays = 0;
+                    // Reutilizamos days_since_planting para compatibilidad si estaba vacío, o añadimos un nuevo campo opcional
+                    normalized.days_since_planting = diffDays.toString();
+                  }
+                }
+
                 return normalized;
               })
             );

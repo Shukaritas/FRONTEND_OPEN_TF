@@ -24,4 +24,11 @@ export class CommunityService {
       })
     );
   }
+
+  createRecommendation(userId: number, comment: string): Observable<Community> {
+    const payload = { userId, comment };
+    return this.http.post<any>(this.communityUrl, payload).pipe(
+      map(response => CommunityAssembler.toEntityFromResource(response))
+    );
+  }
 }

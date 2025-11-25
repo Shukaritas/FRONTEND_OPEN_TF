@@ -9,29 +9,40 @@
     </div>
   </header>
 
-  <main class="fields-grid">
-    <a *ngFor="let field of fields$ | async" [routerLink]="['/my-fields', field.id]" class="field-card-link">
-      <div class="field-card">
-        <div class="card-image" [style.backgroundImage]="'url(' + field.image_url + ')'">
-          <div class="status-chip" [ngClass]="field.status.toLowerCase()">
-            <span class="status-dot"></span>
-            {{ field.status }}
+  <main>
+    <div class="fields-grid" *ngIf="(fields$ | async)?.length; else emptyState">
+      <ng-container *ngIf="(fields$ | async) as fields">
+        <a *ngFor="let field of fields" [routerLink]="['/my-fields', field.id]" class="field-card-link">
+          <div class="field-card">
+            <div class="card-image" [style.backgroundImage]="'url(' + field.image_url + ')'">
+              <div class="status-chip" [ngClass]="field.status.toLowerCase()">
+                <span class="status-dot"></span>
+                {{ field.status }}
+              </div>
+            </div>
+            <div class="card-content">
+              <h3 class="field-title">{{ field.title }}</h3>
+              <p class="field-subtitle">{{ field.days }} {{ 'FIELDS.days_left' | translate }}</p>
+            </div>
           </div>
-        </div>
-        <div class="card-content">
-          <h3 class="field-title">{{ field.title }}</h3>
-          <p class="field-subtitle">{{ field.cropName }} - {{ field.days }} Days</p>
-        </div>
-      </div>
-    </a>
+        </a>
+        <a routerLink="/my-fields/add" class="add-card-link">
+          <div class="add-card-container">
+            <button class="add-button">
+              <mat-icon>+</mat-icon>
+            </button>
+          </div>
+        </a>
+      </ng-container>
+    </div>
 
-    <a routerLink="/my-fields/add" class="add-card-link">
-      <div class="add-card-container">
-        <button class="add-button">
-          <mat-icon>+</mat-icon>
+    <ng-template #emptyState>
+      <div class="empty-state-container">
+        <p class="empty-text">{{ 'EMPTY.NO_FIELDS' | translate }}</p>
+        <button routerLink="/my-fields/add" class="add-button-large">
+          <mat-icon>add</mat-icon>
         </button>
       </div>
-    </a>
+    </ng-template>
   </main>
-
 </div>

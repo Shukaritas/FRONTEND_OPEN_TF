@@ -19,6 +19,7 @@
 .recommendations-list {
   display: flex;
   flex-direction: column;
+  max-width: 800px;
 }
 
 .recommendation-item {
@@ -38,4 +39,55 @@
   line-height: 1.6;
   color: #333;
   margin: 0;
+}
+
+.community-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+  gap: 1rem;
+  max-width: 800px; /* ancho consistente con comment-section y formulario */
+  width: 100%;
+  margin-left: 0; /* asegurar alineación izquierda */
+}
+
+.new-post-btn {
+  background-color: #a8bfa8 !important;
+  color: #000 !important;
+  border-radius: 20px;
+  font-weight: 500;
+  padding: 0.5rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.post-form-container {
+  background: #f9f9f9;
+  padding: 0.75rem 1rem; /* ligero ajuste */
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  margin-bottom: 1rem; /* menor separación */
+  max-width: 800px; /* ya presente, mantenido para consistencia */
+  width: 100%;
+}
+
+.post-form-container .full-width, .post-form-container textarea[matInput] {
+  width: 100%;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.publish-btn {
+  background-color: #a8bfa8 !important;
+  color: #000 !important;
+  border-radius: 20px;
+  font-weight: 500;
+  padding: 0.5rem 1.25rem;
 }

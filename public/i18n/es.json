@@ -87,27 +87,40 @@
   },
   "COMMUNITY": {
     "TITLE": "Comunidad",
-    "DESCRIPTION": "Conecta con la comunidad mediante recomendaciones para tus cultivos"
+    "DESCRIPTION": "Conecta con la comunidad mediante recomendaciones para tus cultivos",
+    "NEW_POST": "Nueva publicación",
+    "PLACEHOLDER_COMMENT": "Escribe tu recomendación...",
+    "PUBLISH": "Publicar",
+    "MESSAGES": {
+      "EMPTY_COMMENT": "El comentario está vacío",
+      "UNAUTHENTICATED": "Usuario no autenticado",
+      "INVALID_USER_ID": "ID de usuario inválido",
+      "PUBLISH_SUCCESS": "Recomendación publicada",
+      "PUBLISH_ERROR": "Error al publicar la recomendación"
+    },
+    "CANCEL": "Cancelar"
   },
   "FIELDS": {
     "title": "Mis campos",
-    "description":"Administras tus campos aqui"
+    "description":"Administras tus campos aqui",
+    "days_left": "días restantes"
   },
   "field_detail": {
     "location": "Localización: ",
     "field_size": "Tamaño del campo: ",
     "crop": "Cultivo: ",
-    "days_since": "Dias desde el plantado: ",
     "planting_date": "Fecha de plantado: ",
     "expected": "Fecha esperada de cosecha: ",
+    "harvest_date": "Fecha de cosecha: ",
+    "days_until_harvest": "Días hasta la cosecha: ",
     "soil_type": "Tipo de suelo: ",
     "watering": "Regado: ",
     "sunlight": "Luz del sol: ",
     "progress": {
       "title": "Progreso e Historia",
       "watered": "Regado el: ",
-      "fertilized": "Fertilziado el: ",
-      "pest": "Inspecion de pestes el:"
+      "fertilized": "Fertilizado el: ",
+      "pest": "Inspección de pestes el:"
     },
     "tasks": "Mis Tareas"
   },
@@ -175,5 +188,18 @@
     "WATERING_LABEL": "Riego",
     "CANCEL": "Cancelar",
     "SAVE": "Guardar"
+  },
+  "EMPTY": {
+    "NO_FIELDS": "Aún no hay campos registrados",
+    "NO_CROPS": "Aún no hay cultivos registrados",
+    "NO_UPCOMING_HARVESTS": "Aún no hay cosechas próximas",
+    "NO_UPCOMING_TASKS": "Aún no hay tareas próximas",
+    "NO_RECOMMENDATIONS": "Aún no hay recomendaciones"
+  },
+  "GENERIC_RECOMMENDATIONS": {
+    "ADVICE_CHECK_CROPS": "Revisa el estado de tus cultivos",
+    "ADVICE_VIEW_TASKS": "Mira tus tareas próximas",
+    "ADVICE_PLAN_IRRIGATION": "Planifica tu riego",
+    "ADVICE_UPDATE_FIELDS": "Actualiza información de tus campos"
   }
 }

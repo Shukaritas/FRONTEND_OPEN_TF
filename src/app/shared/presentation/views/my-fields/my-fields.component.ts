@@ -61,21 +61,27 @@ export class MyFieldsComponent implements OnInit {
           return of([]);
         }
 
-        // Paso 3: Para cada campo, obtener su información de cultivo en paralelo
         const enrichedFields$ = fields.map(field =>
           this.cropService.getCropByFieldId(field.id).pipe(
             map(crop => {
-              // Paso 4: Calcular días desde planting_date
+              // Cálculo de días restantes hasta la cosecha
               let days = '0';
-              if (crop && crop.planting_date) {
-                const plantingDate = new Date(crop.planting_date);
-                const today = new Date();
-                const diffTime = Math.abs(today.getTime() - plantingDate.getTime());
-                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                days = diffDays.toString();
+              if (crop) {
+                const rawHarvest = (crop as any).harvestDate || crop.harvest_date;
+                if (rawHarvest) {
+                  const today = new Date();
+                  today.setHours(0, 0, 0, 0);
+                  const harvestDate = new Date(rawHarvest);
+                  if (!isNaN(harvestDate.getTime())) {
+                    harvestDate.setHours(0, 0, 0, 0);
+                    const diffTime = harvestDate.getTime() - today.getTime(); // Futuro - Hoy
+                    let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    if (diffDays < 0) diffDays = 0; // Ya pasó la fecha
+                    days = diffDays.toString();
+                  }
+                }
               }
 
-              // Paso 5: Construir el objeto CombinedField
               const combinedField: CombinedField = {
                 id: field.id,
                 title: field.name,
@@ -89,7 +95,6 @@ export class MyFieldsComponent implements OnInit {
           )
         );
 
-        // Ejecutar todas las peticiones en paralelo
         return forkJoin(enrichedFields$);
       })
     );

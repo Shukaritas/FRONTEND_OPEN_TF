@@ -19,12 +19,13 @@
     <section class="details-section">
       <div class="detail-item"><span>{{'field_detail.location'| translate}}</span> <strong>{{ field.location }}</strong></div>
       <div class="detail-item"><span>{{'field_detail.field_size'| translate}}</span> <strong>{{ field.field_size }}</strong></div>
-      <div class="detail-item"><span>Crop</span> <strong>{{ field.crop?.title || 'No crop assigned' }}</strong></div>
-      <div class="detail-item"><span>Planting Date</span> <strong>{{ field.crop?.plantingDate | date:'dd/MM/yyyy' }}</strong></div>
-      <div class="detail-item"><span>Harvest Date</span> <strong>{{ field.crop?.harvestDate | date:'dd/MM/yyyy' }}</strong></div>
-      <div class="detail-item"><span>Soil Type</span> <strong>{{ field.crop?.soilType }}</strong></div>
-      <div class="detail-item"><span>Sunlight</span> <strong>{{ field.crop?.sunlight }}</strong></div>
-      <div class="detail-item"><span>Watering</span> <strong>{{ field.crop?.watering }}</strong></div>
+      <div class="detail-item"><span>{{'field_detail.crop'| translate}}</span> <strong>{{ field.crop?.title || 'No crop assigned' }}</strong></div>
+      <div class="detail-item"><span>{{'field_detail.planting_date'| translate}}</span> <strong>{{ field.crop?.plantingDate | date:'dd/MM/yyyy' }}</strong></div>
+      <div class="detail-item"><span>{{'field_detail.harvest_date'| translate}}</span> <strong>{{ field.crop?.harvestDate | date:'dd/MM/yyyy' }}</strong></div>
+      <div class="detail-item"><span>{{'field_detail.days_until_harvest'| translate}}</span> <strong>{{ field.days_since_planting }} {{ 'FIELDS.days_left' | translate }}</strong></div>
+      <div class="detail-item"><span>{{'field_detail.soil_type'| translate}}</span> <strong>{{ field.crop?.soilType }}</strong></div>
+      <div class="detail-item"><span>{{'field_detail.sunlight'| translate}}</span> <strong>{{ field.crop?.sunlight }}</strong></div>
+      <div class="detail-item"><span>{{'field_detail.watering'| translate}}</span> <strong>{{ field.crop?.watering }}</strong></div>
     </section>
 
     <section class="history-tasks-section">

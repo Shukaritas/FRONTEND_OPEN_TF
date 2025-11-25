@@ -42,26 +42,25 @@ export class UserService {
   }
 
   updateUser(user: User): Observable<User> {
-    const url = `${this.userUrl}/${user.id}`;
-    const body = UserAssembler.toResourceFromEntity(user);
+    const url = `${this.userUrl}/${user.id}/profile`;
+    const body = {
+      userName: user.userName,
+      email: user.email,
+      phoneNumber: user.phoneNumber
+    };
     return this.http.put<any>(url, body).pipe(
       map(response => UserAssembler.toEntityFromResource(response))
     );
   }
 
-  deleteAccountData(id: number): Observable<User> {
+  changePassword(userId: number, currentPassword: string, newPassword: string): Observable<void> {
+    const url = `${this.userUrl}/${userId}/password`;
+    const body = { currentPassword, newPassword };
+    return this.http.put<void>(url, body);
+  }
+
+  deleteUser(id: number): Observable<void> {
     const url = `${this.userUrl}/${id}`;
-    const clearedUser: User = {
-      id: id,
-      userName: "",
-      email: "",
-      phoneNumber: "",
-      identificator: "",
-      password: ""
-    };
-    const body = UserAssembler.toResourceFromEntity(clearedUser);
-    return this.http.put<any>(url, body).pipe(
-      map(response => UserAssembler.toEntityFromResource(response))
-    );
+    return this.http.delete<void>(url);
   }
 }
