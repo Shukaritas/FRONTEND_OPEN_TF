@@ -1,5 +1,5 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
+import {Component, OnInit, OnDestroy, Inject, PLATFORM_ID} from '@angular/core';
+import { CommonModule, DatePipe, isPlatformBrowser } from '@angular/common';
 import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -38,7 +38,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private fieldService: FieldService,
     private cropService: CropService,
     private taskService: TaskService,
-    private router: Router
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit() {
@@ -59,6 +60,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   loadData() {
+    // Proteger acceso a localStorage en SSR
+    if (!isPlatformBrowser(this.platformId)) {
+      // En el servidor, no hacemos nada para evitar errores
+      return;
+    }
+
     const userIdStr = localStorage.getItem('userId');
     if (!userIdStr) { this.router.navigate(['/login']); return; }
     const userId = parseInt(userIdStr, 10);

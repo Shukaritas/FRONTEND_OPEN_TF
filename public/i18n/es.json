@@ -24,7 +24,9 @@
     "DAYS": "Días",
     "TODAY": "Hoy",
     "TOMORROW": "Mañana",
-    "VIEW_ALL": "Ver Todo"
+    "VIEW_ALL": "Ver Todo",
+    "CANCEL": "Cancelar",
+    "SAVE": "Guardar"
   },
   "LOGIN": {
     "WELCOME_BACK": "¡Bienvenido de Nuevo!",
@@ -32,7 +34,12 @@
     "PASSWORD": "Contraseña",
     "SIGN_IN": "Iniciar sesión",
     "NO_ACCOUNT": "¿No tienes una cuenta?",
-    "SIGN_UP": "Regístrate"
+    "SIGN_UP": "Regístrate",
+    "MISSING_CREDENTIALS": "Por favor ingrese correo y contraseña.",
+    "INVALID_RESPONSE": "Respuesta inválida del servidor: falta token.",
+    "SUCCESS": "Inicio de sesión exitoso.",
+    "INVALID_CREDENTIALS": "Credenciales inválidas.",
+    "ERROR": "Error al intentar iniciar sesión."
   },
   "DASHBOARD": {
     "WELCOME_BACK": "¡Bienvenido de nuevo!",
@@ -96,7 +103,9 @@
       "UNAUTHENTICATED": "Usuario no autenticado",
       "INVALID_USER_ID": "ID de usuario inválido",
       "PUBLISH_SUCCESS": "Recomendación publicada",
-      "PUBLISH_ERROR": "Error al publicar la recomendación"
+      "PUBLISH_ERROR": "Error al publicar la recomendación",
+      "POST_SUCCESS": "Recomendación publicada",
+      "POST_ERROR": "Error al publicar la recomendación"
     },
     "CANCEL": "Cancelar"
   },
@@ -158,7 +167,17 @@
     "FOOTER": {
       "LOGOUT": "Cerrar sesión",
       "DELETE_ACCOUNT": "Eliminar cuenta"
-    }
+    },
+    "PHONE_INVALID": "El número de teléfono debe incluir prefijo internacional. Ejemplo: +51XXXXXXXX",
+    "EMAIL_CHANGED_LOGOUT": "Tu correo ha cambiado. Por seguridad, tu sesión se cerrará.",
+    "UPDATE_SUCCESS": "Datos actualizados",
+    "UPDATE_ERROR": "No se pudieron guardar los datos personales.",
+    "PASSWORD_FIELDS_INCOMPLETE": "Complete todos los campos de contraseña.",
+    "PASSWORD_MISMATCH": "Las nuevas contraseñas no coinciden.",
+    "PASSWORD_UPDATE_SUCCESS": "Contraseña actualizada correctamente.",
+    "PASSWORD_UPDATE_ERROR": "No se pudo cambiar la contraseña. Verifique la actual.",
+    "ACCOUNT_DELETE_SUCCESS": "Tu cuenta ha sido eliminada. ¡Hasta pronto!",
+    "ACCOUNT_DELETE_ERROR": "Hubo un error eliminando tu cuenta."
   },
   "NEW_FIELD": {
     "BUTTONS": {
@@ -187,7 +206,11 @@
     "SUNLIGHT_LABEL": "Luz solar",
     "WATERING_LABEL": "Riego",
     "CANCEL": "Cancelar",
-    "SAVE": "Guardar"
+    "SAVE": "Guardar",
+    "FORM_INCOMPLETE": "Por favor completa todos los campos y selecciona un campo.",
+    "CREATE_SUCCESS": "Cultivo creado exitosamente.",
+    "CREATE_ERROR": "No se pudo crear el cultivo. Intenta nuevamente.",
+    "CANCELLED": "Acción cancelada"
   },
   "EMPTY": {
     "NO_FIELDS": "Aún no hay campos registrados",
@@ -201,5 +224,30 @@
     "ADVICE_VIEW_TASKS": "Mira tus tareas próximas",
     "ADVICE_PLAN_IRRIGATION": "Planifica tu riego",
     "ADVICE_UPDATE_FIELDS": "Actualiza información de tus campos"
+  },
+  "NOTIFICATIONS": {
+    "CLOSE": "Cerrar"
+  },
+  "AUTH": {
+    "NO_SESSION": "No hay sesión activa. Inicia sesión nuevamente.",
+    "INVALID_USER": "Usuario inválido"
+  },
+  "DIALOGS": {
+    "TASK_NEW_TITLE": "Nueva Tarea",
+    "TASK_EDIT_TITLE": "Editar Tarea",
+    "TASK_DESCRIPTION": "Descripción",
+    "TASK_DESCRIPTION_PLACEHOLDER": "Ingresa la descripción de la tarea",
+    "TASK_DUE_DATE": "Fecha de vencimiento",
+    "HISTORY_TITLE": "Actualizar historial de progreso",
+    "HISTORY_LAST_WATERED": "Último riego",
+    "HISTORY_LAST_FERTILIZED": "Última fertilización",
+    "HISTORY_LAST_PESTS": "Último control de plagas"
+  },
+  "DATE": {
+    "FORMAT": "DD/MM/YYYY",
+    "FORMAT_HINT": "Usa el formato DD/MM/YYYY",
+    "ERROR_INVALID_FORMAT": "Formato inválido. Usa DD/MM/YYYY.",
+    "ERROR_OUT_OF_RANGE": "Fecha fuera de rango.",
+    "ERROR_INVALID": "Fecha inválida."
   }
 }

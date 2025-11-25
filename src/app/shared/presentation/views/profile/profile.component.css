@@ -118,3 +118,44 @@
   background-color: #f0f0f0;
   color: #333;
 }
+
+/* Estilos para campos de contraseña con botón del ojo */
+.password-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.password-input {
+  width: 100%;
+  padding: 1rem;
+  padding-right: 50px; /* Espacio para el botón del ojo */
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+  background-color: #f5f5f5;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.password-input::placeholder {
+  color: #999;
+}
+
+.password-input:focus {
+  outline: none;
+  border-color: var(--app-primary-color);
+}
+
+.eye-btn {
+  position: absolute !important;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666 !important;
+  z-index: 10;
+  width: 40px !important;
+  height: 40px !important;
+  padding: 8px !important;
+}
+

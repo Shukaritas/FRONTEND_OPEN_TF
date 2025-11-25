@@ -38,32 +38,51 @@
 
     <section class="form-section">
       <h2>{{'PROFILE.PASSWORD.TITLE' | translate}}</h2>
-      <div class="form-field password-field">
-        <div class="password-input-wrapper">
-          <input [type]="showCurrentPassword ? 'text' : 'password'" [(ngModel)]="currentPassword" name="currentPassword" [placeholder]="'PROFILE.PASSWORD.CURRENT_PLACEHOLDER' | translate">
-          <button type="button" class="reveal-btn" (click)="toggleCurrent()">
+
+      <div class="form-field">
+        <div class="password-wrapper">
+          <input
+            [type]="showCurrentPassword ? 'text' : 'password'"
+            [(ngModel)]="currentPassword"
+            name="currentPassword"
+            class="password-input"
+            [placeholder]="'PROFILE.PASSWORD.CURRENT_PLACEHOLDER' | translate" />
+          <button mat-icon-button type="button" class="eye-btn" (click)="toggleCurrent()">
             <mat-icon>{{ showCurrentPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
           </button>
         </div>
       </div>
-      <div class="form-field password-field">
-        <div class="password-input-wrapper">
-          <input [type]="showNewPassword ? 'text' : 'password'" [(ngModel)]="newPassword" name="newPassword" [placeholder]="'PROFILE.PASSWORD.NEW_PLACEHOLDER' | translate">
-          <button type="button" class="reveal-btn" (click)="toggleNew()">
+
+      <div class="form-field">
+        <div class="password-wrapper">
+          <input
+            [type]="showNewPassword ? 'text' : 'password'"
+            [(ngModel)]="newPassword"
+            name="newPassword"
+            class="password-input"
+            [placeholder]="'PROFILE.PASSWORD.NEW_PLACEHOLDER' | translate" />
+          <button mat-icon-button type="button" class="eye-btn" (click)="toggleNew()">
             <mat-icon>{{ showNewPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
           </button>
         </div>
       </div>
-      <div class="form-field password-field">
-        <div class="password-input-wrapper">
-          <input [type]="showConfirmPassword ? 'text' : 'password'" [(ngModel)]="confirmNewPassword" name="confirmPassword" [placeholder]="'PROFILE.PASSWORD.CONFIRM_PLACEHOLDER' | translate">
-          <button type="button" class="reveal-btn" (click)="toggleConfirm()">
+
+      <div class="form-field">
+        <div class="password-wrapper">
+          <input
+            [type]="showConfirmPassword ? 'text' : 'password'"
+            [(ngModel)]="confirmNewPassword"
+            name="confirmPassword"
+            class="password-input"
+            [placeholder]="'PROFILE.PASSWORD.CONFIRM_PLACEHOLDER' | translate" />
+          <button mat-icon-button type="button" class="eye-btn" (click)="toggleConfirm()">
             <mat-icon>{{ showConfirmPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
           </button>
         </div>
       </div>
+
       <div class="form-actions right">
-        <button class="save-btn" (click)="onChangePassword()">{{'PROFILE.PASSWORD.CONFIRM_PLACEHOLDER' | translate}}</button>
+        <button class="save-btn" (click)="onChangePassword()">{{'PROFILE.PASSWORD.SAVE_BUTTON' | translate}}</button>
       </div>
     </section>
   </main>

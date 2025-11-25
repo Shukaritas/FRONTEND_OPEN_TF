@@ -67,3 +67,7 @@ button[mat-raised-button] {
   min-width: 80px;
 }
 
+:host .save-btn {
+  background-color: #2E7D32 !important;
+  color: #ffffff !important;
+}

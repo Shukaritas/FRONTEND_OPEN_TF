@@ -1,5 +1,5 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, ChangeDetectorRef, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject, Observable, forkJoin, switchMap, of, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
@@ -44,7 +44,8 @@ export class MyCropsComponent implements OnInit {
     private cropService: CropService,
     private http: HttpClient,
     private cdr: ChangeDetectorRef,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit(): void {
@@ -52,6 +53,12 @@ export class MyCropsComponent implements OnInit {
   }
 
   private loadCropsWithFields(): void {
+    // Proteger acceso a localStorage en SSR
+    if (!isPlatformBrowser(this.platformId)) {
+      this.cropsSubject.next([]);
+      return;
+    }
+
     const userIdStr = localStorage.getItem('userId');
     const userId = userIdStr ? Number(userIdStr) : null;
     if (!userId) {

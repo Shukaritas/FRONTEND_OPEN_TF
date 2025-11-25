@@ -11,7 +11,11 @@
 
         <mat-form-field appearance="outline" class="form-field">
           <mat-label>Contraseña</mat-label>
-          <input matInput [(ngModel)]="password" name="password" type="password" required />
+          <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="password" name="password" required />
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="hide ? 'Mostrar contraseña' : 'Ocultar contraseña'" [attr.aria-pressed]="!hide" type="button">
+            <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+          <mat-error *ngIf="!password">La contraseña es requerida</mat-error>
         </mat-form-field>
 
         <button mat-raised-button color="primary" type="submit" class="sign-in-button">

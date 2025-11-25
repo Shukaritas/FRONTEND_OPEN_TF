@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>{{ 'DIALOGS.HISTORY_TITLE' | translate }}</h2>
+<div mat-dialog-content class="dialog-content">
+  <mat-form-field appearance="outline">
+    <mat-label>{{ 'DIALOGS.HISTORY_LAST_WATERED' | translate }} (DD/MM/YYYY)</mat-label>
+    <input matInput [(ngModel)]="wateredStr" placeholder="DD/MM/YYYY" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>{{ 'DIALOGS.HISTORY_LAST_FERTILIZED' | translate }} (DD/MM/YYYY)</mat-label>
+    <input matInput [(ngModel)]="fertilizedStr" placeholder="DD/MM/YYYY" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>{{ 'DIALOGS.HISTORY_LAST_PESTS' | translate }} (DD/MM/YYYY)</mat-label>
+    <input matInput [(ngModel)]="pestsStr" placeholder="DD/MM/YYYY" />
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions class="dialog-actions">
+  <button mat-button (click)="onCancel()">{{ 'COMMON.CANCEL' | translate }}</button>
+  <button mat-flat-button class="save-btn" color="primary" (click)="onSave()">{{ 'COMMON.SAVE' | translate }}</button>
+</div>

@@ -1,13 +1,17 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, inject, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import {UserService} from '../../../../plants/profile/services/profile.services';
 import {User} from '../../../../plants/profile/domain/model/profile.entity';
-import {TranslatePipe} from '@ngx-translate/core';
+import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import { UserEventsService } from '../../../infrastructure/services/user-events.service';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @Component({
@@ -20,6 +24,10 @@ import { UserEventsService } from '../../../infrastructure/services/user-events.
     MatSlideToggleModule,
     MatIconModule,
     TranslatePipe,
+    MatSnackBarModule,
+    MatFormFieldModule, // añadido para mat-form-field
+    MatInputModule,     // añadido para matInput
+    MatButtonModule     // añadido para mat-icon-button
   ],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
@@ -28,6 +36,9 @@ export class ProfileComponent implements OnInit {
   private userService = inject(UserService);
   private router = inject(Router);
   private userEvents = inject(UserEventsService);
+  private snackBar = inject(MatSnackBar);
+  private translate = inject(TranslateService);
+  private platformId = inject(PLATFORM_ID);
 
   public user: User = new User();
 
@@ -42,7 +53,23 @@ export class ProfileComponent implements OnInit {
   private originalEmail: string = ''; // Email original para detectar cambios
   private originalUserName: string = '';
 
+  private showNotification(key: string, actionKey: string = 'NOTIFICATIONS.CLOSE', duration: number = 3000) {
+    const action = this.translate.instant(actionKey);
+    this.translate.get(key).subscribe(message => {
+      this.snackBar.open(message, action, {
+        duration,
+        verticalPosition: 'bottom',
+        horizontalPosition: 'center'
+      });
+    });
+  }
+
   ngOnInit() {
+    // Proteger acceso a localStorage en SSR
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
     const storedId = localStorage.getItem('userId');
     if (!storedId) {
       // Sin sesión: redirigir a login
@@ -77,7 +104,7 @@ export class ProfileComponent implements OnInit {
     const phone = this.user.phoneNumber.trim();
     const phoneRegex = /^\+[0-9]{1,3}[0-9]{6,11}$/; // código país 1-3 dígitos + número 6-11 dígitos
     if (!phoneRegex.test(phone)) {
-      alert('El número de teléfono debe incluir prefijo internacional. Ejemplo: +51XXXXXXXX');
+      this.showNotification('PROFILE.PHONE_INVALID');
       return;
     }
 
@@ -87,7 +114,7 @@ export class ProfileComponent implements OnInit {
       next: (response) => {
         this.user = response;
         if (this.user.email !== this.originalEmail) {
-          alert('Tu correo ha cambiado. Por seguridad, tu sesión se cerrará.');
+          this.showNotification('PROFILE.EMAIL_CHANGED_LOGOUT');
           this.onLogout();
           return;
         }
@@ -95,10 +122,10 @@ export class ProfileComponent implements OnInit {
           this.userEvents.emitUserNameChanged({ oldName: this.originalUserName, newName: this.user.userName });
           this.originalUserName = this.user.userName; // actualizar referencia
         }
-        alert('Datos actualizados');
+        this.showNotification('PROFILE.UPDATE_SUCCESS');
         this.originalEmail = this.user.email;
       },
-      error: () => alert('No se pudieron guardar los datos personales.')
+      error: () => this.showNotification('PROFILE.UPDATE_ERROR')
     });
   }
 
@@ -106,11 +133,11 @@ export class ProfileComponent implements OnInit {
     if (!this.user) return;
 
     if (!this.currentPassword || !this.newPassword || !this.confirmNewPassword) {
-      alert('Complete todos los campos de contraseña.');
+      this.showNotification('PROFILE.PASSWORD_FIELDS_INCOMPLETE');
       return;
     }
     if (this.newPassword !== this.confirmNewPassword) {
-      alert('Las nuevas contraseñas no coinciden.');
+      this.showNotification('PROFILE.PASSWORD_MISMATCH');
       return;
     }
     // Llamar endpoint dedicado
@@ -119,11 +146,11 @@ export class ProfileComponent implements OnInit {
         this.currentPassword = '';
         this.newPassword = '';
         this.confirmNewPassword = '';
-        alert('Contraseña actualizada correctamente.');
+        this.showNotification('PROFILE.PASSWORD_UPDATE_SUCCESS');
       },
       error: (err) => {
         console.error('Error cambiando contraseña', err);
-        alert('No se pudo cambiar la contraseña. Verifique la actual.');
+        this.showNotification('PROFILE.PASSWORD_UPDATE_ERROR');
       }
     });
   }
@@ -142,12 +169,12 @@ export class ProfileComponent implements OnInit {
     if (confirmation) {
       this.userService.deleteUser(this.user.id).subscribe({
         next: () => {
-          alert('Tu cuenta ha sido eliminada. ¡Hasta pronto!');
+          this.showNotification('PROFILE.ACCOUNT_DELETE_SUCCESS');
           this.onLogout();
         },
         error: (err) => {
           console.error('Error eliminando la cuenta:', err);
-          alert('Hubo un error eliminando tu cuenta.');
+          this.showNotification('PROFILE.ACCOUNT_DELETE_ERROR');
         }
       });
     }

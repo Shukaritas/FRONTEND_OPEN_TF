@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { forkJoin, map, Observable, switchMap, of } from 'rxjs';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -36,10 +36,17 @@ export class MyFieldsComponent implements OnInit {
   constructor(
     private fieldService: FieldService,
     private cropService: CropService,
-    private router: Router
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit() {
+    // Proteger acceso a localStorage en SSR
+    if (!isPlatformBrowser(this.platformId)) {
+      this.fields$ = of([]);
+      return;
+    }
+
     // Paso 1: Obtener userId del localStorage
     const userIdStr = localStorage.getItem('userId');
     if (!userIdStr) {

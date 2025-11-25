@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
@@ -24,7 +24,8 @@ export class AddFieldComponent {
 
   constructor(
     private fieldService: FieldService,
-    private router: Router
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   onFileSelected(event: Event): void {
@@ -60,6 +61,11 @@ export class AddFieldComponent {
   async onSave() {
     if (!this.fieldName || !this.location || !this.fieldSize) {
       alert('Por favor complete todos los campos obligatorios.');
+      return;
+    }
+
+    // Proteger acceso a localStorage en SSR
+    if (!isPlatformBrowser(this.platformId)) {
       return;
     }
 

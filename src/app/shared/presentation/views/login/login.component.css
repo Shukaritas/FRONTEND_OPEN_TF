@@ -44,6 +44,49 @@
   background-color: transparent;
 }
 
+/* Mantener el ancho completo del campo */
+.form-field ::ng-deep .mat-mdc-form-field {
+  width: 100%;
+}
+
+/* Asegurar altura consistente */
+.form-field ::ng-deep .mat-mdc-form-field-flex {
+  align-items: center;
+  min-height: 56px;
+}
+
+/* Estilo del input interno */
+.form-field ::ng-deep .mat-mdc-input-element {
+  padding: 16px 14px;
+  font-size: 1rem;
+}
+
+/* Espaciado para el botón del ojo */
+.form-field ::ng-deep .mat-mdc-form-field-icon-suffix {
+  padding-right: 8px;
+}
+
+/* Tamaño del botón del ojo */
+.form-field ::ng-deep .mat-mdc-icon-button {
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+}
+
+/* Bordes redondeados */
+.form-field ::ng-deep .mdc-notched-outline .mdc-notched-outline__leading,
+.form-field ::ng-deep .mdc-notched-outline .mdc-notched-outline__notch,
+.form-field ::ng-deep .mdc-notched-outline .mdc-notched-outline__trailing {
+  border-radius: 4px;
+}
+
+/* Color del borde al enfocar */
+.form-field ::ng-deep .mat-mdc-form-field.mat-focused .mdc-notched-outline .mdc-notched-outline__leading,
+.form-field ::ng-deep .mat-mdc-form-field.mat-focused .mdc-notched-outline .mdc-notched-outline__notch,
+.form-field ::ng-deep .mat-mdc-form-field.mat-focused .mdc-notched-outline .mdc-notched-outline__trailing {
+  border-color: #5a7b5a !important;
+}
+
 .sign-in-button {
   /* ESTA ES LA CLAVE: 100% del ancho para igualar a los inputs */
   width: 100%;

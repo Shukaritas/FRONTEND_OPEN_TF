@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>{{ data ? ('DIALOGS.TASK_EDIT_TITLE' | translate) : ('DIALOGS.TASK_NEW_TITLE' | translate) }}</h2>
+<mat-dialog-content class="dialog-form">
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>{{ 'DIALOGS.TASK_DESCRIPTION' | translate }}</mat-label>
+    <textarea matInput [(ngModel)]="description" rows="3" placeholder="{{ 'DIALOGS.TASK_DESCRIPTION_PLACEHOLDER' | translate }}"></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>{{ 'DIALOGS.TASK_DUE_DATE' | translate }} ({{ 'DATE.FORMAT' | translate }})</mat-label>
+    <input matInput [(ngModel)]="dueDateString" placeholder="{{ 'DATE.FORMAT' | translate }}" />
+    <mat-hint>{{ 'DATE.FORMAT_HINT' | translate }}</mat-hint>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">{{ 'COMMON.CANCEL' | translate }}</button>
+  <button mat-flat-button class="save-btn" color="primary" (click)="onSave()">{{ 'COMMON.SAVE' | translate }}</button>
+</mat-dialog-actions>

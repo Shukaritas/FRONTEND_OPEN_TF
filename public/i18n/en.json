@@ -24,7 +24,9 @@
     "DAYS": "Days",
     "TODAY": "Today",
     "TOMORROW": "Tomorrow",
-    "VIEW_ALL": "View All"
+    "VIEW_ALL": "View All",
+    "CANCEL": "Cancel",
+    "SAVE": "Save"
   },
   "LOGIN": {
     "WELCOME_BACK": "Welcome Back!",
@@ -32,7 +34,12 @@
     "PASSWORD": "Password",
     "SIGN_IN": "Sign in",
     "NO_ACCOUNT": "Don't have an account?",
-    "SIGN_UP": "Sign up"
+    "SIGN_UP": "Sign up",
+    "MISSING_CREDENTIALS": "Please enter email and password.",
+    "INVALID_RESPONSE": "Invalid server response: token missing.",
+    "SUCCESS": "Login successful.",
+    "INVALID_CREDENTIALS": "Invalid credentials.",
+    "ERROR": "Error attempting to login."
   },
   "DASHBOARD": {
     "WELCOME_BACK": "Welcome back!",
@@ -96,7 +103,9 @@
       "UNAUTHENTICATED": "User not authenticated",
       "INVALID_USER_ID": "Invalid user ID",
       "PUBLISH_SUCCESS": "Recommendation published",
-      "PUBLISH_ERROR": "Error publishing recommendation"
+      "PUBLISH_ERROR": "Error publishing recommendation",
+      "POST_SUCCESS": "Recommendation published",
+      "POST_ERROR": "Error publishing recommendation"
     },
     "CANCEL": "Cancel"
   },
@@ -158,7 +167,17 @@
     "FOOTER": {
       "LOGOUT": "Log out",
       "DELETE_ACCOUNT": "Delete account"
-    }
+    },
+    "PHONE_INVALID": "Phone number must include international prefix. Example: +51XXXXXXXX",
+    "EMAIL_CHANGED_LOGOUT": "Your email has changed. For security, your session will be closed.",
+    "UPDATE_SUCCESS": "Data updated",
+    "UPDATE_ERROR": "Could not save personal data.",
+    "PASSWORD_FIELDS_INCOMPLETE": "Complete all password fields.",
+    "PASSWORD_MISMATCH": "New passwords do not match.",
+    "PASSWORD_UPDATE_SUCCESS": "Password updated successfully.",
+    "PASSWORD_UPDATE_ERROR": "Could not change password. Verify current password.",
+    "ACCOUNT_DELETE_SUCCESS": "Your account has been deleted. Goodbye!",
+    "ACCOUNT_DELETE_ERROR": "There was an error deleting your account."
   },
   "NEW_FIELD": {
     "BUTTONS": {
@@ -201,5 +220,30 @@
     "ADVICE_VIEW_TASKS": "Look at your upcoming tasks",
     "ADVICE_PLAN_IRRIGATION": "Plan your irrigation",
     "ADVICE_UPDATE_FIELDS": "Update your field information"
+  },
+  "NOTIFICATIONS": {
+    "CLOSE": "Close"
+  },
+  "AUTH": {
+    "NO_SESSION": "No active session. Please sign in again.",
+    "INVALID_USER": "Invalid user"
+  },
+  "DIALOGS": {
+    "TASK_NEW_TITLE": "New Task",
+    "TASK_EDIT_TITLE": "Edit Task",
+    "TASK_DESCRIPTION": "Description",
+    "TASK_DESCRIPTION_PLACEHOLDER": "Enter task description",
+    "TASK_DUE_DATE": "Due date",
+    "HISTORY_TITLE": "Update Progress History",
+    "HISTORY_LAST_WATERED": "Last Watered",
+    "HISTORY_LAST_FERTILIZED": "Last Fertilized",
+    "HISTORY_LAST_PESTS": "Last Pest Control"
+  },
+  "DATE": {
+    "FORMAT": "DD/MM/YYYY",
+    "FORMAT_HINT": "Use format DD/MM/YYYY",
+    "ERROR_INVALID_FORMAT": "Invalid date format. Use DD/MM/YYYY.",
+    "ERROR_OUT_OF_RANGE": "Date out of range.",
+    "ERROR_INVALID": "Invalid date."
   }
 }

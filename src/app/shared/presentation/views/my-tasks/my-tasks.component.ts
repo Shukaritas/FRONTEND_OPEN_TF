@@ -1,17 +1,19 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, ChangeDetectorRef, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject, Observable, forkJoin, of, switchMap, map } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Task } from '../../../../plants/task/domain/model/task.entity';
 import { TaskService } from '../../../../plants/task/services/task.services';
 import { FieldService } from '../../../../plants/field/services/field.services';
 import { TranslatePipe } from '@ngx-translate/core';
+import { TaskDialogComponent } from '../my-fields/task-dialog/task-dialog.component';
 
 @Component({
   selector: 'app-my-tasks',
   standalone: true,
-  imports: [ CommonModule, MatIconModule, MatButtonModule, TranslatePipe ],
+  imports: [ CommonModule, MatIconModule, MatButtonModule, TranslatePipe, MatDialogModule ],
   templateUrl: './my-tasks.component.html',
   styleUrls: ['./my-tasks.component.css']
 })
@@ -23,7 +25,9 @@ export class MyTasksComponent implements OnInit {
   constructor(
     private taskService: TaskService,
     private fieldService: FieldService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private dialog: MatDialog,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit(): void {
@@ -31,6 +35,12 @@ export class MyTasksComponent implements OnInit {
   }
 
   private loadTasks(): void {
+    // Proteger acceso a localStorage en SSR
+    if (!isPlatformBrowser(this.platformId)) {
+      this.tasksSubject.next([]);
+      return;
+    }
+
     // 1. Obtener userId del localStorage
     const userIdStr = localStorage.getItem('userId');
     if (!userIdStr) {
@@ -125,7 +135,6 @@ export class MyTasksComponent implements OnInit {
   editTask(task: Task, event: Event): void {
     event.stopPropagation();
 
-    // Resolver fieldId desde la tarea
     const dynamicTask: any = task as any;
     const fieldIdResolved: number | null =
       (typeof dynamicTask.fieldId === 'number' ? dynamicTask.fieldId : null) ??
@@ -136,35 +145,50 @@ export class MyTasksComponent implements OnInit {
       return;
     }
 
-    const newDescription = prompt('Nueva descripción de la tarea:', task.description);
-    if (newDescription === null) return; // cancelado
-
-    const currentDateFormatted = this.formatDateToDDMMYYYY(task.due_date);
-    const newDateStr = prompt('Nueva fecha (DD/MM/YYYY):', currentDateFormatted);
-    if (newDateStr === null) return; // cancelado
-
-    const newDateISO = this.parseDateFromDDMMYYYY(newDateStr, task.due_date);
-
-    const payload: { fieldId: number; description: string; dueDate: string } = {
-      fieldId: fieldIdResolved,
-      description: newDescription.trim() || task.description,
-      dueDate: newDateISO
-    };
-
-    this.taskService.updateTaskByPayload(task.id, payload).subscribe({
-      next: () => {
-        // Actualizar localmente
-        const tasks = this.tasksSubject.getValue().map(t =>
-          t.id === task.id ? { ...t, description: payload.description, due_date: payload.dueDate } : t
-        );
-        this.tasksSubject.next(tasks);
-        this.cdr.detectChanges();
-        alert('Tarea actualizada correctamente');
-      },
-      error: err => {
-        console.error('Error actualizando tarea:', err);
-        alert('No se pudo actualizar la tarea');
+    const dialogRef = this.dialog.open(TaskDialogComponent, {
+      width: '500px',
+      data: {
+        description: task.description,
+        dueDate: task.due_date,
+        field: (task as any).field || ''
       }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (!result) return; // cancelado
+      if (!result.dueDateIso) return; // formato inválido no se cerró correctamente
+
+      const payload: { fieldId: number; description: string; dueDate: string } = {
+        fieldId: fieldIdResolved,
+        description: result.description?.trim() || task.description,
+        dueDate: result.dueDateIso
+      };
+
+      // Optimistic update
+      const optimisticTasks = this.tasksSubject.getValue().map(t =>
+        t.id === task.id ? { ...t, description: payload.description, due_date: payload.dueDate } : t
+      );
+      this.tasksSubject.next(optimisticTasks);
+      this.cdr.detectChanges();
+
+      this.taskService.updateTaskByPayload(task.id, payload).subscribe({
+        next: (response) => {
+          const finalTasks = this.tasksSubject.getValue().map(t =>
+            t.id === task.id ? { ...t, description: response.description || payload.description, due_date: response.dueDate || response.due_date || payload.dueDate } : t
+          );
+          this.tasksSubject.next(finalTasks);
+          this.cdr.detectChanges();
+        },
+        error: (err) => {
+          console.error('Error actualizando tarea:', err);
+          // revertir
+          const reverted = this.tasksSubject.getValue().map(t =>
+            t.id === task.id ? { ...t, description: task.description, due_date: task.due_date } : t
+          );
+          this.tasksSubject.next(reverted);
+          this.cdr.detectChanges();
+        }
+      });
     });
   }
 

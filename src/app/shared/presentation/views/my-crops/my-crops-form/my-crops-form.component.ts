@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Output, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Output, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { FieldService } from '../../../../../plants/field/services/field.services';
@@ -13,7 +13,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { TextFieldModule } from '@angular/cdk/text-field';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 export interface Field {
   id: number;
@@ -26,7 +27,7 @@ export interface Field {
   imports: [
     CommonModule, FormsModule, MatCardModule, MatFormFieldModule,
     MatInputModule, MatSelectModule, MatIconModule, MatButtonModule,
-    TextFieldModule, TranslatePipe
+    TextFieldModule, TranslatePipe, MatSnackBarModule
   ],
   templateUrl: './my-crops-form.component.html',
   styleUrls: ['./my-crops-form.component.css']
@@ -52,14 +53,34 @@ export class CropFormComponent implements OnInit {
   constructor(
     private fieldService: FieldService,
     private cropService: CropService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar,
+    private translate: TranslateService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
+  private showNotification(key: string, actionKey: string = 'NOTIFICATIONS.CLOSE', duration: number = 3000) {
+    const action = this.translate.instant(actionKey);
+    this.translate.get(key).subscribe(message => {
+      this.snackBar.open(message, action, {
+        duration,
+        verticalPosition: 'bottom',
+        horizontalPosition: 'center'
+      });
+    });
+  }
+
   ngOnInit() {
+    // Proteger acceso a localStorage en SSR
+    if (!isPlatformBrowser(this.platformId)) {
+      this.fields$ = of([]);
+      return;
+    }
+
     const userIdStr = localStorage.getItem('userId');
     const userId = userIdStr ? Number(userIdStr) : null;
     if (!userId) {
-      alert('No se encontró el usuario en sesión. Inicia sesión nuevamente.');
+      this.showNotification('AUTH.NO_SESSION');
       this.fields$ = of([]);
       return;
     }
@@ -74,7 +95,7 @@ export class CropFormComponent implements OnInit {
 
   onSubmit(): void {
     if (!this.selectedFieldId || !this.newCrop.title || !this.newCrop.planting_date || !this.newCrop.harvest_date) {
-      alert('Por favor completa todos los campos y selecciona un field.');
+      this.showNotification('CROPS.FORM_INCOMPLETE');
       return;
     }
 
@@ -91,14 +112,13 @@ export class CropFormComponent implements OnInit {
 
     this.cropService.createCrop(payload).subscribe({
       next: () => {
-        // Emitir evento para que el padre refresque lista o navegar
         this.cropCreated.emit();
-        // Opcional: navegar a lista de cultivos
         this.router.navigate(['/my-crops']).catch(() => {});
+        this.showNotification('CROPS.CREATE_SUCCESS');
       },
       error: err => {
         console.error('Error creando cultivo', err);
-        alert('No se pudo crear el cultivo. Intenta nuevamente.');
+        this.showNotification('CROPS.CREATE_ERROR');
       }
     });
   }
@@ -106,5 +126,6 @@ export class CropFormComponent implements OnInit {
   onCancel(): void {
     this.cancel.emit();
     this.router.navigate(['/my-crops']).catch(() => {});
+    this.showNotification('CROPS.CANCELLED');
   }
 }

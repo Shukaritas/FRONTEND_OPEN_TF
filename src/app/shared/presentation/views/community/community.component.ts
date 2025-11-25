@@ -1,7 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { Community } from '../../../../plants/community_recommendations/domain/model/community.entity';
 import { CommunityService } from '../../../../plants/community_recommendations/services/community.services';
 import { FormsModule } from '@angular/forms';
@@ -9,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { takeUntil } from 'rxjs/operators';
 import { UserEventsService } from '../../../infrastructure/services/user-events.service';
 
@@ -22,7 +23,8 @@ import { UserEventsService } from '../../../infrastructure/services/user-events.
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatSnackBarModule
   ],
   templateUrl: './community.component.html',
   styleUrls: ['./community.component.css']
@@ -37,11 +39,20 @@ export class CommunityComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   private pendingNameChange: {oldName: string; newName: string} | null = null;
 
-  constructor(private communityService: CommunityService, private userEvents: UserEventsService) {}
+  constructor(
+    private communityService: CommunityService,
+    private userEvents: UserEventsService,
+    private snackBar: MatSnackBar,
+    private translate: TranslateService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   ngOnInit(): void {
-    const userIdStr = localStorage.getItem('userId');
-    this.currentUserId = userIdStr ? parseInt(userIdStr, 10) : null;
+    // Proteger acceso a localStorage en SSR
+    if (isPlatformBrowser(this.platformId)) {
+      const userIdStr = localStorage.getItem('userId');
+      this.currentUserId = userIdStr ? parseInt(userIdStr, 10) : null;
+    }
     this.recommendations$ = this.recommendationsSubject.asObservable();
     this.loadRecommendations();
     this.userEvents.userNameChanged$
@@ -87,26 +98,55 @@ export class CommunityComponent implements OnInit, OnDestroy {
     this.recommendationsSubject.next(current);
   }
 
+  private showNotification(key: string, actionKey: string = 'NOTIFICATIONS.CLOSE', duration: number = 3000) {
+    const action = this.translate.instant(actionKey);
+    this.translate.get(key).subscribe(message => {
+      this.snackBar.open(message, action, {
+        duration,
+        verticalPosition: 'bottom',
+        horizontalPosition: 'center'
+      });
+    });
+  }
+
   toggleForm() {
     this.isFormVisible = !this.isFormVisible;
   }
 
   postRecommendation() {
     const trimmed = this.newComment.trim();
-    if (!trimmed) return;
+    if (!trimmed) {
+      this.showNotification('COMMUNITY.EMPTY_COMMENT');
+      return;
+    }
+
+    // Proteger acceso a localStorage en SSR
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
     const userIdStr = localStorage.getItem('userId');
-    if (!userIdStr) return;
+    if (!userIdStr) {
+      this.showNotification('AUTH.NO_SESSION');
+      return;
+    }
     const userId = parseInt(userIdStr, 10);
-    if (isNaN(userId)) return;
+    if (isNaN(userId)) {
+      this.showNotification('AUTH.INVALID_USER');
+      return;
+    }
 
     this.communityService.createRecommendation(userId, trimmed).subscribe({
       next: created => {
-        // Añadir nueva recomendación al estado local sin recargar toda la lista
         this.recommendationsSubject.next([...this.recommendationsSubject.value, created]);
         this.newComment = '';
         this.isFormVisible = false;
+        this.showNotification('COMMUNITY.POST_SUCCESS');
       },
-      error: err => console.error('Error creando recomendación', err)
+      error: err => {
+        console.error('Error creando recomendación', err);
+        this.showNotification('COMMUNITY.POST_ERROR');
+      }
     });
   }
 }
